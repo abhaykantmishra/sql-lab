@@ -71,22 +71,28 @@ export default function PlaygroundPage() {
 
         // 1. Create Table
         const headers = Object.keys(data[0]);
-        // Simple type inference could be added here, but for now we'll default to TEXT for flexibility
-        // or try to guess based on the first row.
-        // Let's just use TEXT for everything to be safe for a playground.
-        const createTableSql = `CREATE TABLE IF NOT EXISTS ${tableName} (${headers.map(h => `${h} TEXT`).join(', ')});`;
+        const tableHeaders = headers.map(h => {
+            // remove space with underscore
+            let headerName = h.replace(" ", "_")
+            // remove special characters
+            headerName = headerName.replace(/[^a-zA-Z0-9_]/g, "")
+            // to lowercase
+            headerName = headerName.toLowerCase()
+            return headerName
+        })
+        const createTableSql = `CREATE TABLE IF NOT EXISTS ${tableName} (${tableHeaders.map(h => `${h} TEXT`).join(', ')});`;
 
         try {
-            await runPersistentQuery(createTableSql);
+            // await runPersistentQuery(createTableSql);
+            const initialSql = createTableSql + '\n' + '\n'
+                    +"-- Change the above data type of table as you want default is TEXT for all" + '\n'
+                    +"-- You can also add constraints on columns" + '\n'
+                    +"-- If you have changed the data type of table then you also have to change them in below lines" + '\n'
+            setCode(initialSql);
 
-            // 2. Insert Data
-            // We'll do this in batches if needed, but for now let's try a single transaction or multiple inserts.
-            // SQLite supports multi-value insert: INSERT INTO t VALUES (v1), (v2), ...
-            // But we need to be careful about limits.
-
-            // Let's construct a transaction block
+            // 2. Insert Data - TODO: Batch Insert
             const insertStatements = [];
-            insertStatements.push('BEGIN TRANSACTION;');
+            // insertStatements.push('BEGIN TRANSACTION;');
 
             data.forEach(row => {
                 const values = headers.map(h => {
@@ -95,29 +101,44 @@ export default function PlaygroundPage() {
                     // Escape single quotes
                     return `'${String(val).replace(/'/g, "''")}'`;
                 });
-                insertStatements.push(`INSERT INTO ${tableName} (${headers.join(', ')}) VALUES (${values.join(', ')});`);
+                insertStatements.push(`INSERT INTO ${tableName} (${tableHeaders.join(', ')}) VALUES (${values.join(', ')});`);
             });
 
-            insertStatements.push('COMMIT;');
+            // insertStatements.push('COMMIT;');
 
             const batchSql = insertStatements.join('\n');
-            const { error } = await runPersistentQuery(batchSql);
+            // setCode(prev => ({...prev, insertStatements.join('\n')}));
+            // setCode(prev => {
+            //     return prev + '\n' + batchSql;
+            // })
 
-            if (error) throw new Error(error);
+            // some check at last
+            const finalSql = initialSql + '\n' + batchSql + '\n' + 
+                "-- Check the table info" + '\n' +
+                `SELECT name as column,type FROM pragma_table_info('${tableName}');` + '\n'
+                // + `SELECT * FROM ${tableName} limit 10;` + '\n'
+            setError(null);
+            setResults(null);
+            setCode(finalSql);
+            
+            // const { results, error } = await runPersistentQuery(batchSql);
 
-            // Optionally, update the editor with a sample query
-            // setCode(`SELECT * FROM ${tableName} LIMIT 10;`);
+            // if (error) {
+            //     setError(error)
+            // }else {
+            //     setResults(results ?? "")
+            // }
 
         } catch (err) {
             console.error("Upload failed:", err);
+            setError(err.message)
             throw err; // Propagate to CsvUploader to show error
-        }
-        finally{
-            await getAvailableTables()
         }
     };
 
     const handleGetTables = async () => {
+        setError(null);
+        setResults(null);
         try {
             const {results: queryResults, error: queryError}  = await runPersistentQuery("SELECT name FROM sqlite_master WHERE type='table';");
             if (queryError) {
@@ -127,6 +148,7 @@ export default function PlaygroundPage() {
             }
         } catch (error) {
             console.error(error)
+            setError(error.message)
         }
     };
 
