@@ -2,14 +2,19 @@
 import React, { useRef } from 'react';
 import Editor from '@monaco-editor/react';
 
-const CodeEditor = ({ code, setCode, onRunQuery, status }) => {
+const CodeEditor = ({ code, setCode, onRunQuery, onSave, status }) => {
     const onRunQueryRef = useRef(onRunQuery);
+    const onSaveRef = useRef(onSave);
     const editorRef = useRef(null);
 
     // Update ref whenever onRunQuery changes
     React.useEffect(() => {
         onRunQueryRef.current = onRunQuery;
     }, [onRunQuery]);
+
+    React.useEffect(() => {
+        onSaveRef.current = onSave;
+    }, [onSave]);
 
     if (status === "loading") {
         return <div>Loading...</div>;
@@ -26,10 +31,20 @@ const CodeEditor = ({ code, setCode, onRunQuery, status }) => {
             }
         );
 
+        // editor.addCommand(
+        //     monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK,
+        //     () => {
+        //         console.log("Ctrl + K pressed inside editor!");
+        //         if (onRunQueryRef.current) {
+        //             onRunQueryRef.current();
+        //         }
+        //     }
+        // );
+
         editor.addCommand(
-            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK,
+            monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
             () => {
-                console.log("Ctrl + K pressed inside Monaco!");
+                console.log("Ctrl + Enter pressed inside editor!");
                 if (onRunQueryRef.current) {
                     onRunQueryRef.current();
                 }
@@ -37,10 +52,12 @@ const CodeEditor = ({ code, setCode, onRunQuery, status }) => {
         );
 
         editor.addCommand(
-            monaco.KeyMod.CtrlCmd | monaco.KeyMod.Enter,
+            monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
             () => {
-                console.log("Ctrl + Enter pressed inside Monaco!");
-                myCustomFunction();
+                console.log("Ctrl + S pressed inside editor!");
+                if (onSaveRef.current) {
+                    onSaveRef.current();
+                }
             }
         );
     }

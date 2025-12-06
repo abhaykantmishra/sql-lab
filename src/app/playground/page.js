@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
-import { Play, RotateCcw, Database } from 'lucide-react';
+import { Play, RotateCcw, Database, CornerDownLeft  } from 'lucide-react';
 import CodeEditor from '@/components/CodeEditor';
 import QueryResults from '@/components/QueryResults';
 import CsvUploader from '@/components/CsvUploader';
@@ -36,10 +36,18 @@ export default function PlaygroundPage() {
     }, []);
 
     // Save code on change
-    useEffect(() => {
-        localStorage.setItem('playground_sql', code);
-    }, [code]);
+    // useEffect(() => {
+    //     localStorage.setItem('playground_sql', code);
+    // }, [code]);
 
+    // On save save code to localstorage
+    const handleSave = () => {
+        try {
+            localStorage.setItem('playground_sql', code);
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     const handleRun = async () => {
         console.log("Running query");
@@ -50,6 +58,9 @@ export default function PlaygroundPage() {
         setResults(null);
 
         try {
+            // console.log("sql:", sql)
+            // let query = !sql ? code : sql;
+            // console.log("query:", query)
             const { results: queryResults, error: queryError } = await runPersistentQuery(code);
             if (queryError) {
                 setError(queryError);
@@ -65,6 +76,8 @@ export default function PlaygroundPage() {
     };
 
     const handleDataUpload = async (tableName, data) => {
+        setResults(null);
+        setError(null);
         if (!data || data.length === 0) return;
 
         console.log(`Uploading data to table ${tableName}`, data);
@@ -87,14 +100,16 @@ export default function PlaygroundPage() {
             const initialSql = createTableSql + '\n' + '\n'
                     +"-- Change the above data type of table as you want default is TEXT for all" + '\n'
                     +"-- You can also add constraints on columns" + '\n'
-                    +"-- If you have changed the data type of table then you also have to change them in below lines" + '\n'
+                    +"-- You dont need to change data types of values in `INSERT INTO` statements below" + '\n'
+                    +"-- Run the query to get the table info" + '\n'
+                    // +"SELECT name as column,type FROM pragma_table_info('" + tableName + "');" + '\n'
             setCode(initialSql);
 
             // 2. Insert Data - TODO: Batch Insert
             const insertStatements = [];
             // insertStatements.push('BEGIN TRANSACTION;');
 
-            data.forEach(row => {
+            data?.forEach(row => {
                 const values = headers.map(h => {
                     const val = row[h];
                     if (val === null || val === undefined) return 'NULL';
@@ -104,21 +119,36 @@ export default function PlaygroundPage() {
                 insertStatements.push(`INSERT INTO ${tableName} (${tableHeaders.join(', ')}) VALUES (${values.join(', ')});`);
             });
 
+            let insertUiStatements = "";
+            // console.log(Array(data).slice(0,10))
+            data?.slice(0,10)?.forEach(row => {
+                const values = headers.map(h => {
+                    const val = row[h];
+                    if (val === null || val === undefined) return 'NULL';
+                    // Escape single quotes
+                    return `'${String(val).replace(/'/g, "''")}'`;
+                });
+                insertUiStatements += `INSERT INTO ${tableName} (${tableHeaders.join(', ')}) VALUES (${values.join(', ')});\n`;
+            });
+
             // insertStatements.push('COMMIT;');
+            // on ui only showing max 10 rows for inserting other will be inserted in background
+            
 
             const batchSql = insertStatements.join('\n');
-            // setCode(prev => ({...prev, insertStatements.join('\n')}));
-            // setCode(prev => {
-            //     return prev + '\n' + batchSql;
-            // })
 
             // some check at last
-            const finalSql = initialSql + '\n' + batchSql + '\n' + 
+            const finalUISql = initialSql + '\n' + insertUiStatements + '\n' + 
                 "-- Check the table info" + '\n' +
                 `SELECT name as column,type FROM pragma_table_info('${tableName}');` + '\n'
                 // + `SELECT * FROM ${tableName} limit 10;` + '\n'
             setError(null);
             setResults(null);
+
+            const finalSql = initialSql + '\n' + batchSql + '\n' + 
+                "-- Check the table info" + '\n' +
+                `SELECT name as column,type FROM pragma_table_info('${tableName}');` + '\n'
+
             setCode(finalSql);
             
             // const { results, error } = await runPersistentQuery(batchSql);
@@ -137,8 +167,8 @@ export default function PlaygroundPage() {
     };
 
     const handleGetTables = async () => {
-        setError(null);
         setResults(null);
+        setError(null);
         try {
             const {results: queryResults, error: queryError}  = await runPersistentQuery("SELECT name FROM sqlite_master WHERE type='table';");
             if (queryError) {
@@ -156,6 +186,7 @@ export default function PlaygroundPage() {
         setCode("-- Write your SQL here\n");
         setResults(null);
         setError(null);
+        setSql(null)
     };
 
     return (
@@ -176,7 +207,7 @@ export default function PlaygroundPage() {
                                 </div>
                             </div>
                             <div className="flex-1 relative">
-                                <CodeEditor code={code} setCode={setCode} onRunQuery={handleRun} status={isEngineReady ? "ready" : "loading"} />
+                                <CodeEditor code={code} setCode={setCode} onRunQuery={handleRun} onSave={handleSave} status={isEngineReady ? "ready" : "loading"} />
                             </div>
                         </div>
                     </Panel>
@@ -209,7 +240,7 @@ export default function PlaygroundPage() {
                                             className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                                         >
                                             <Play size={16} className={isRunning ? "animate-pulse" : ""} />
-                                            {isRunning ? 'Running...' : <>Run <span className='text-xs text-center border border-white p-0.5 rounded-10'>Ctrl+k</span></>}
+                                            {isRunning ? 'Running...' : <>Run <span className='text-xs text-center border border-white p-0.5 rounded-10 flex flex-row justify-center items-center'>Ctrl+ <CornerDownLeft className='text-xs text-center w-4 h-4' /> </span></>}
                                         </button>
                                     </div>
                                 }
