@@ -37,7 +37,6 @@ export default function PlaygroundPage() {
 
     // Save code on change
     useEffect(() => {
-        getAvailableTables()
         localStorage.setItem('playground_sql', code);
     }, [code]);
 
@@ -118,11 +117,17 @@ export default function PlaygroundPage() {
         }
     };
 
-    const getAvailableTables = async () => {
-        const {results, error}  = await runPersistentQuery("SELECT name FROM sqlite_master WHERE type='table';");
-        console.log(results)
-        console.error(error)
-        setAvailableTables(results);
+    const handleGetTables = async () => {
+        try {
+            const {results: queryResults, error: queryError}  = await runPersistentQuery("SELECT name FROM sqlite_master WHERE type='table';");
+            if (queryError) {
+                setError(queryError);
+            } else {
+                setResults(queryResults);
+            }
+        } catch (error) {
+            console.error(error)
+        }
     };
 
     const handleReset = () => {
@@ -158,28 +163,17 @@ export default function PlaygroundPage() {
 
                     <Panel defaultSize={50} minSize={20}>
                         <div className="h-full overflow-hidden">
-                            {/* Available Tables */}
-                            {/* <div>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Tables</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            availableTables?.map((table) => (
-                                                <tr key={table}>
-                                                    <td>{table}</td>
-                                                </tr>
-                                            ))
-                                        }
-                                    </tbody>
-                                </table>
-                            </div> */}
+
                             <QueryResults results={results} error={error}
                                 children={
                                     <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={handleGetTables}
+                                            disabled={!isEngineReady || isRunning}
+                                            className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        >
+                                            Show Tables 
+                                        </button>
                                         <button
                                             onClick={handleReset}
                                             className="p-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors"
