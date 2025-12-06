@@ -70,14 +70,14 @@ const Workspace = () => {
 
     useEffect(() => {
         const question = getQuestionById(1);
-        console.log(question)
+        // console.log(question)
         setCurrentQuestion(question);
     }, []);
 
     return (
-        <div className="h-full my-1 w-full bg-zinc-950 flex flex-col overflow-hidden">
+        <div className="h-[calc(100vh-5rem)] my-1 w-full bg-zinc-950 flex flex-col overflow-hidden">
             {/* Toolbar */}
-            <div className="h-6 border-b border-zinc-800 bg-zinc-900 flex items-center justify-between px-4 shrink-0">
+            <div className="h-8 border-b border-zinc-800 bg-zinc-900 flex items-center justify-between px-4 shrink-0">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => setShowQuestionList(!showQuestionList)}
