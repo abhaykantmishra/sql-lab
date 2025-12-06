@@ -1,0 +1,18 @@
+{
+    "id": 4,
+    "title": "Find Youngest User",
+    "difficulty": "Easy",
+    "markdown": "\n# Find Youngest User\n\nWrite a SQL query to find the name and age of the youngest user.\n\n### Table Schema\n| Column | Type    | Description |\n|--------|---------|-------------|\n| id     | INTEGER | Primary Key |\n| name   | TEXT    | User Name   |\n| age    | INTEGER | User Age    |\n\n### Example\n**Input:**\n```\n+----+-------+-----+\n| id | name  | age |\n+----+-------+-----+\n| 1  | Alice | 30  |\n| 2  | Bob   | 20  |\n| 3  | Charlie| 35 |\n+----+-------+-----+\n```\n\n**Output:**\n```\n+-------+-----+\n| name  | age |\n+-------+-----+\n| Bob   | 20  |\n+-------+-----+\n```\n    ",
+    "testCases": [
+        {
+            "input": "Standard dataset",
+            "setupSql": "\n          CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, age INTEGER);\n          INSERT INTO users (id, name, age) VALUES (1, 'Alice', 30);\n          INSERT INTO users (id, name, age) VALUES (2, 'Bob', 20);\n          INSERT INTO users (id, name, age) VALUES (3, 'Charlie', 35);\n        ",
+            "solutionSql": "SELECT name, age FROM users ORDER BY age ASC LIMIT 1;"
+        },
+        {
+            "input": "Multiple youngest",
+            "setupSql": "\n          CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, age INTEGER);\n          INSERT INTO users (id, name, age) VALUES (1, 'Dave', 20);\n          INSERT INTO users (id, name, age) VALUES (2, 'Eve', 20);\n          INSERT INTO users (id, name, age) VALUES (3, 'Frank', 30);\n        ",
+            "solutionSql": "SELECT name, age FROM users ORDER BY age ASC LIMIT 1;"
+        }
+    ]
+}
