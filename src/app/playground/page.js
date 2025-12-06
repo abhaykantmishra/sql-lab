@@ -37,7 +37,7 @@ export default function PlaygroundPage() {
     useEffect(() => {
         localStorage.setItem('playground_sql', code);
     }, [code]);
-    
+
 
     const handleRun = async () => {
         console.log("Running query");
@@ -62,7 +62,7 @@ export default function PlaygroundPage() {
     };
 
 
-    
+
 
     const handleReset = () => {
         setCode("-- Write your SQL here\n");
@@ -71,34 +71,7 @@ export default function PlaygroundPage() {
     };
 
     return (
-        <div className="h-screen flex flex-col bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans">
-            {/* Header */}
-            <header className="h-14 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center px-4 justify-between shrink-0">
-                <div className="flex items-center gap-2">
-                    <Database className="text-blue-600 dark:text-blue-400" size={20} />
-                    <h1 className="font-bold text-lg tracking-tight">SQL Playground</h1>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 font-medium border border-blue-200 dark:border-blue-800">
-                        Persistent
-                    </span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <button
-                        onClick={handleReset}
-                        className="p-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors"
-                        title="Reset Editor"
-                    >
-                        <RotateCcw size={18} />
-                    </button>
-                    <button
-                        onClick={handleRun}
-                        disabled={!isEngineReady || isRunning}
-                        className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-                    >
-                        <Play size={16} className={isRunning ? "animate-pulse" : ""} />
-                        {isRunning ? 'Running...' : 'Run Query'}
-                    </button>
-                </div>
-            </header>
+        <div className="h-[calc(100vh-4rem)] flex flex-col bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans">
 
             {/* Main Content */}
             <div className="flex-1 overflow-hidden">
@@ -106,7 +79,7 @@ export default function PlaygroundPage() {
                     <Panel defaultSize={50} minSize={20}>
                         <div className="h-full flex flex-col">
                             <div className="flex-1 relative">
-                                <CodeEditor code={code} setCode={setCode} onRunQuery={handleRun} status={isEngineReady ? "ready" : "loading"}/>
+                                <CodeEditor code={code} setCode={setCode} onRunQuery={handleRun} status={isEngineReady ? "ready" : "loading"} />
                             </div>
                         </div>
                     </Panel>
@@ -115,7 +88,27 @@ export default function PlaygroundPage() {
 
                     <Panel defaultSize={50} minSize={20}>
                         <div className="h-full overflow-hidden">
-                            <QueryResults results={results} error={error} />
+                            <QueryResults results={results} error={error} 
+                                children= {
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                                onClick={handleReset}
+                                            className="p-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors"
+                                            title="Reset Editor"
+                                        >
+                                            <RotateCcw size={18} />
+                                        </button>
+                                        <button
+                                            onClick={handleRun}
+                                            disabled={!isEngineReady || isRunning}
+                                            className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                        >
+                                            <Play size={16} className={isRunning ? "animate-pulse" : ""} />
+                                            {isRunning ? 'Running...' : <>Run <span className='text-xs text-center border border-white p-0.5 rounded-10'>Ctrl+k</span></>}
+                                        </button>
+                                    </div>
+                                }  
+                            />
                         </div>
                     </Panel>
                 </PanelGroup>

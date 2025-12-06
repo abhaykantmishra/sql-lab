@@ -16,13 +16,18 @@ export const metadata = {
   description: "A playground & Question practice platform for SQL",
 };
 
+import Header from "@/components/Header";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        {children}
+        <Header />
+        <div className="flex-1 flex flex-col">
+          {children}
+        </div>
       </body>
     </html>
   );

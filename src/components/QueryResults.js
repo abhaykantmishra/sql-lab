@@ -36,16 +36,16 @@ const ResultTable = ({ data }) => {
     );
 };
 
-const QueryResults = ({ results, error }) => {
+const QueryResults = ({ results, error, children }) => {
     return (
         <div className="h-full flex flex-col bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
-            <div className="flex items-center border-b border-zinc-200 dark:border-zinc-800 px-4 py-2">
+            <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 px-4 py-2">
                 <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                     <CheckCircle2 size={16} className="text-blue-500" />
                     Query Results
                 </h3>
+                {children}
             </div>
-
             <div className="flex-1 p-4 overflow-auto">
                 {error ? (
                     <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 flex items-start gap-3">

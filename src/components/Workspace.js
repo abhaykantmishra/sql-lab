@@ -7,7 +7,7 @@ import TestResults from './TestResults';
 import QuestionList from './QuestionList';
 import { Play, CheckCheck, List } from 'lucide-react';
 import { getQuestionById } from '@/lib/questionLoader';
-import { QUESTIONS} from '@/questions-bank/questions-list';
+import { QUESTIONS } from '@/questions-bank/questions-list';
 import { runQuery, checkSolution } from '@/lib/sqlEngine';
 import { cn } from '@/lib/utils';
 
@@ -75,16 +75,10 @@ const Workspace = () => {
     }, []);
 
     return (
-        <div className="h-screen w-full bg-zinc-950 flex flex-col overflow-hidden">
-            {/* Header */}
-            <header className="h-14 border-b border-zinc-800 bg-zinc-900 flex items-center justify-between px-4 shrink-0">
+        <div className="h-full my-1 w-full bg-zinc-950 flex flex-col overflow-hidden">
+            {/* Toolbar */}
+            <div className="h-6 border-b border-zinc-800 bg-zinc-900 flex items-center justify-between px-4 shrink-0">
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-orange-500 rounded flex items-center justify-center font-bold text-white">
-                            SQL
-                        </div>
-                        <span className="font-semibold text-zinc-100">Lab</span>
-                    </div>
                     <button
                         onClick={() => setShowQuestionList(!showQuestionList)}
                         className={cn(
@@ -93,7 +87,7 @@ const Workspace = () => {
                         )}
                         title="Toggle Question List"
                     >
-                        <List size={20} />
+                        <List size={15} />
                     </button>
                 </div>
                 <div className="flex items-center gap-2">
@@ -102,7 +96,7 @@ const Workspace = () => {
                         className="flex items-center gap-2 px-4 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded text-sm font-medium transition-colors"
                     >
                         <Play size={16} className="fill-zinc-100" />
-                        Run
+                        {<>Run <span className='text-xs text-center border border-white p-0.5 rounded-10'>Ctrl+k</span></>}
                     </button>
                     <button
                         onClick={handleSubmit}
@@ -112,7 +106,7 @@ const Workspace = () => {
                         Submit
                     </button>
                 </div>
-            </header>
+            </div>
 
             {/* Main Content */}
             <div className="flex-1 overflow-hidden flex">
