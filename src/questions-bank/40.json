@@ -1,23 +1,27 @@
 {
     "id": 40,
-    "title": "Group Sold Products By The Date",
-    "difficulty": "Easy",
-    "markdown": "\n# **Group Sold Products By The Date**\n\n## Implement the 'Group Sold Products By The Date' query using GROUP BY, GROUP_CONCAT.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id | INT |\n| val | INT |\n\n### Example\n\n**Input:**\n```\n**t23**\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n\n**Expected Output:**\n```\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n",
+    "title": "Query Challenge 40",
+    "difficulty": "Medium",
+    "tags": [
+        "SELECT",
+        "WHERE"
+    ],
+    "markdown": "# **Query Challenge 40**\n\n**Difficulty:** Medium  \u2022  **Tags:** `SELECT` \u2022 `WHERE`\n\n\n\n## **Problem Description**\n\nWrite a SQL query to solve challenge #40.\n\n\n\n## **Table Schema**\n\n**data**\n```\n+--------+------+\n| Column | Type |\n+--------+------+\n| id     | INT  |\n| value  | INT  |\n+--------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**data**\n```\n+----+-------+\n| id | value |\n+----+-------+\n| 1  | 10    |\n| 2  | 20    |\n| 3  | 30    |\n+----+-------+\n```\n\n### **Expected Output**\n\n```\n+----+-------+\n| id | value |\n+----+-------+\n| 1  | 10    |\n| 2  | 20    |\n| 3  | 30    |\n+----+-------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE t23(id INT, val INT); INSERT INTO t23 VALUES (1,10),(2,20),(3,30);",
-            "solutionSql": "SELECT * FROM t23;"
+            "setupSql": "CREATE TABLE data(id INT, value INT); INSERT INTO data VALUES (1,10),(2,20),(3,30);",
+            "solutionSql": "SELECT * FROM data;"
         },
         {
             "input": "Empty",
-            "setupSql": "CREATE TABLE t23(id INT, val INT);",
-            "solutionSql": "SELECT * FROM t23;"
+            "setupSql": "CREATE TABLE data(id INT, value INT);",
+            "solutionSql": "SELECT * FROM data;"
         },
         {
-            "input": "Single",
-            "setupSql": "CREATE TABLE t23(id INT, val INT); INSERT INTO t23 VALUES (1,100);",
-            "solutionSql": "SELECT * FROM t23;"
+            "input": "Large",
+            "setupSql": "CREATE TABLE data(id INT, value INT); INSERT INTO data VALUES (1,10),(2,20),(3,30);",
+            "solutionSql": "SELECT * FROM data;"
         }
     ]
 }

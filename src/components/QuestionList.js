@@ -22,16 +22,25 @@ const QuestionList = ({ questions, currentQuestionId, onSelectQuestion }) => {
                             {/* Placeholder for solved status */}
                             <Circle size={16} className="text-zinc-400" />
                         </div>
-                        <div>
+                        <div className="flex-1">
                             <div className="font-medium text-zinc-900 dark:text-zinc-100 text-sm mb-1">{q.id}. {q.title}</div>
                             <div className={cn(
-                                "text-xs font-medium",
+                                "text-xs font-medium mb-1",
                                 q.difficulty === 'Easy' ? "text-green-600 dark:text-green-400" :
                                     q.difficulty === 'Medium' ? "text-yellow-600 dark:text-yellow-400" :
                                         "text-red-600 dark:text-red-400"
                             )}>
                                 {q.difficulty}
                             </div>
+                            {q.tags && q.tags.length > 0 && (
+                                <div className="flex flex-wrap gap-1">
+                                    {q.tags.slice(0, 3).map((tag, idx) => (
+                                        <span key={idx} className="text-[10px] px-1.5 py-0.5 bg-zinc-200 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 rounded">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </button>
                 ))}

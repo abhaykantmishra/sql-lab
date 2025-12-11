@@ -1,23 +1,26 @@
 {
     "id": 19,
-    "title": "Trips and Users",
+    "title": "User Login Streak",
     "difficulty": "Hard",
-    "markdown": "\n# **Trips and Users**\n\n## Implement the 'Trips and Users' query using JOIN, CASE, GROUP BY.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id | INT |\n| val | INT |\n\n### Example\n\n**Input:**\n```\n**t2**\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n\n**Expected Output:**\n```\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n",
+    "tags": [
+        "WINDOW FUNCTION"
+    ],
+    "markdown": "# **User Login Streak**\n\n**Difficulty:** Hard  \u2022  **Tags:** `WINDOW FUNCTION`\n\n\n\n## **Problem Description**\n\nFind users with the longest consecutive login streak.\n\n\n\n## **Table Schema**\n\n**logins**\n```\n+------------+------+\n| Column     | Type |\n+------------+------+\n| user_id    | INT  |\n| login_date | DATE |\n+------------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**logins**\n```\n+---------+------------+\n| user_id | login_date |\n+---------+------------+\n| 1       | 2023-01-01 |\n| 1       | 2023-01-02 |\n| 1       | 2023-01-03 |\n| 2       | 2023-01-01 |\n| 2       | 2023-01-03 |\n+---------+------------+\n```\n\n### **Expected Output**\n\n```\n+---------+--------+\n| user_id | streak |\n+---------+--------+\n| 1       | 3      |\n+---------+--------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE t2(id INT, val INT); INSERT INTO t2 VALUES (1,10),(2,20),(3,30);",
-            "solutionSql": "SELECT * FROM t2;"
+            "setupSql": "CREATE TABLE logins(user_id INT, login_date DATE); INSERT INTO logins VALUES (1,'2023-01-01'),(1,'2023-01-02'),(1,'2023-01-03'),(2,'2023-01-01'),(2,'2023-01-03');",
+            "solutionSql": "SELECT user_id, COUNT(*) as streak FROM logins GROUP BY user_id ORDER BY streak DESC LIMIT 1;"
         },
         {
             "input": "Empty",
-            "setupSql": "CREATE TABLE t2(id INT, val INT);",
-            "solutionSql": "SELECT * FROM t2;"
+            "setupSql": "CREATE TABLE logins(user_id INT, login_date DATE);",
+            "solutionSql": "SELECT user_id, COUNT(*) as streak FROM logins GROUP BY user_id ORDER BY streak DESC LIMIT 1;"
         },
         {
-            "input": "Single",
-            "setupSql": "CREATE TABLE t2(id INT, val INT); INSERT INTO t2 VALUES (1,100);",
-            "solutionSql": "SELECT * FROM t2;"
+            "input": "Large",
+            "setupSql": "CREATE TABLE logins(user_id INT, login_date DATE); INSERT INTO logins VALUES (1,'2023-01-01'),(1,'2023-01-02'),(1,'2023-01-03'),(2,'2023-01-01'),(2,'2023-01-03');",
+            "solutionSql": "SELECT user_id, COUNT(*) as streak FROM logins GROUP BY user_id ORDER BY streak DESC LIMIT 1;"
         }
     ]
 }

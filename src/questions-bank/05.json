@@ -2,27 +2,27 @@
     "id": 5,
     "title": "Second Highest Salary",
     "difficulty": "Medium",
-    "markdown": "\n# **Second Highest Salary**\n\n## Write a SQL query to get the second highest salary from the Employee table. Return NULL if there is no second highest salary.\n\n### Table Schema\n| Column | Type    |\n|--------|---------|\n| id     | INTEGER |\n| salary | INTEGER |\n\n### Example\n\n**Input:**\n```\n**Employee**\n+----+--------+\n| id | salary |\n+----+--------+\n| 1  | 100    |\n| 2  | 200    |\n| 3  | 300    |\n+----+--------+\n```\n\n**Expected Output:**\n```\n+---------------------+\n| SecondHighestSalary |\n+---------------------+\n| 200                 |\n+---------------------+\n```\n",
+    "tags": [
+        "SELECT",
+        "SUBQUERY",
+        "MAX"
+    ],
+    "markdown": "# **Second Highest Salary**\n\n**Difficulty:** Medium  \u2022  **Tags:** `SELECT` \u2022 `SUBQUERY` \u2022 `MAX`\n\n\n\n## **Problem Description**\n\nWrite a SQL query to get the second highest salary from the `employees` table. Return NULL if there is no second highest.\n\n\n\n## **Table Schema**\n\n**employees**\n```\n+--------+------+\n| Column | Type |\n+--------+------+\n| id     | INT  |\n| name   | TEXT |\n| salary | INT  |\n+--------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**employees**\n```\n+----+---------+--------+\n| id | name    | salary |\n+----+---------+--------+\n| 1  | Alice   | 100000 |\n| 2  | Bob     | 80000  |\n| 3  | Charlie | 120000 |\n+----+---------+--------+\n```\n\n### **Expected Output**\n\n```\n+---------------------+\n| SecondHighestSalary |\n+---------------------+\n| 100000              |\n+---------------------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE Employee(id INT, salary INT); INSERT INTO Employee VALUES (1,100),(2,200),(3,300);",
-            "solutionSql": "SELECT MAX(salary) as SecondHighestSalary FROM Employee WHERE salary < (SELECT MAX(salary) FROM Employee);"
-        },
-        {
-            "input": "Single Row",
-            "setupSql": "CREATE TABLE Employee(id INT, salary INT); INSERT INTO Employee VALUES (1,100);",
-            "solutionSql": "SELECT MAX(salary) as SecondHighestSalary FROM Employee WHERE salary < (SELECT MAX(salary) FROM Employee);"
-        },
-        {
-            "input": "Duplicate Max",
-            "setupSql": "CREATE TABLE Employee(id INT, salary INT); INSERT INTO Employee VALUES (1,100),(2,100),(3,200);",
-            "solutionSql": "SELECT MAX(salary) as SecondHighestSalary FROM Employee WHERE salary < (SELECT MAX(salary) FROM Employee);"
+            "setupSql": "CREATE TABLE employees(id INT, name TEXT, salary INT); INSERT INTO employees VALUES (1,'Alice',100000),(2,'Bob',80000),(3,'Charlie',120000);",
+            "solutionSql": "SELECT MAX(salary) as SecondHighestSalary FROM employees WHERE salary < (SELECT MAX(salary) FROM employees);"
         },
         {
             "input": "Empty",
-            "setupSql": "CREATE TABLE Employee(id INT, salary INT);",
-            "solutionSql": "SELECT MAX(salary) as SecondHighestSalary FROM Employee WHERE salary < (SELECT MAX(salary) FROM Employee);"
+            "setupSql": "CREATE TABLE employees(id INT, name TEXT, salary INT);",
+            "solutionSql": "SELECT MAX(salary) as SecondHighestSalary FROM employees WHERE salary < (SELECT MAX(salary) FROM employees);"
+        },
+        {
+            "input": "Large",
+            "setupSql": "CREATE TABLE employees(id INT, name TEXT, salary INT); INSERT INTO employees VALUES (1,'Alice',100000),(2,'Bob',80000),(3,'Charlie',120000);",
+            "solutionSql": "SELECT MAX(salary) as SecondHighestSalary FROM employees WHERE salary < (SELECT MAX(salary) FROM employees);"
         }
     ]
 }

@@ -1,13 +1,27 @@
 {
     "id": 3,
-    "title": "Count Users by Age Group",
+    "title": "Count Users by City",
     "difficulty": "Medium",
-    "markdown": "\n# **Count Users by Age Group**\n\n## Table Schema\n\n### Table Schema\n| Column | Type    | Description |\n|--------|---------|-------------|\n| id     | INTEGER | Primary Key |\n| name   | TEXT    | User Name   |\n| age    | INTEGER | User Age    |\n\n### Example\n\n**Input:**\n```\n**users**\n+----+---------+-----+\n| id | name    | age |\n+----+---------+-----+\n| 1  | Alice   | 30  |\n| 2  | Bob     | 20  |\n| 3  | Charlie | 30  |\n| 4  | Dave    | 20  |\n+----+---------+-----+\n```\n\n**Expected Output:**\n```\n+-----+-------+\n| age | count |\n+-----+-------+\n| 20  | 2     |\n| 30  | 2     |\n+-----+-------+\n```\n",
+    "tags": [
+        "COUNT",
+        "GROUP BY"
+    ],
+    "markdown": "# **Count Users by City**\n\n**Difficulty:** Medium  \u2022  **Tags:** `COUNT` \u2022 `GROUP BY`\n\n\n\n## **Problem Description**\n\nWrite a SQL query to count the number of users in each city.\n\n\n\n## **Table Schema**\n\n**users**\n```\n+--------+------+\n| Column | Type |\n+--------+------+\n| id     | INT  |\n| name   | TEXT |\n| city   | TEXT |\n+--------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**users**\n```\n+----+---------+------+\n| id | name    | city |\n+----+---------+------+\n| 1  | Alice   | NYC  |\n| 2  | Bob     | LA   |\n| 3  | Charlie | NYC  |\n| 4  | David   | LA   |\n| 5  | Eve     | NYC  |\n+----+---------+------+\n```\n\n### **Expected Output**\n\n```\n+------+------------+\n| city | user_count |\n+------+------------+\n| LA   | 2          |\n| NYC  | 3          |\n+------+------------+\n```\n",
     "testCases": [
         {
-            "input": "Standard dataset",
-            "setupSql": "\n          CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, age INTEGER);\n          INSERT INTO users (id, name, age) VALUES (1, 'Alice', 30);\n          INSERT INTO users (id, name, age) VALUES (2, 'Bob', 20);\n          INSERT INTO users (id, name, age) VALUES (3, 'Charlie', 30);\n          INSERT INTO users (id, name, age) VALUES (4, 'Dave', 20);\n        ",
-            "solutionSql": "SELECT age, COUNT(*) as count FROM users GROUP BY age ORDER BY age ASC;"
+            "input": "Standard",
+            "setupSql": "CREATE TABLE users(id INT, name TEXT, city TEXT); INSERT INTO users VALUES (1,'Alice','NYC'),(2,'Bob','LA'),(3,'Charlie','NYC'),(4,'David','LA'),(5,'Eve','NYC');",
+            "solutionSql": "SELECT city, COUNT(*) as user_count FROM users GROUP BY city;"
+        },
+        {
+            "input": "Empty",
+            "setupSql": "CREATE TABLE users(id INT, name TEXT, city TEXT);",
+            "solutionSql": "SELECT city, COUNT(*) as user_count FROM users GROUP BY city;"
+        },
+        {
+            "input": "Large",
+            "setupSql": "CREATE TABLE users(id INT, name TEXT, city TEXT); INSERT INTO users VALUES (1,'Alice','NYC'),(2,'Bob','LA'),(3,'Charlie','NYC'),(4,'David','LA'),(5,'Eve','NYC');",
+            "solutionSql": "SELECT city, COUNT(*) as user_count FROM users GROUP BY city;"
         }
     ]
 }

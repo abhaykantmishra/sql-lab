@@ -1,23 +1,27 @@
 {
     "id": 46,
-    "title": "Average Selling Price",
-    "difficulty": "Easy",
-    "markdown": "\n# **Average Selling Price**\n\n## Implement the 'Average Selling Price' query using JOIN, SUM, AVG.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id | INT |\n| val | INT |\n\n### Example\n\n**Input:**\n```\n**t29**\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n\n**Expected Output:**\n```\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n",
+    "title": "Query Challenge 46",
+    "difficulty": "Medium",
+    "tags": [
+        "SELECT",
+        "WHERE"
+    ],
+    "markdown": "# **Query Challenge 46**\n\n**Difficulty:** Medium  \u2022  **Tags:** `SELECT` \u2022 `WHERE`\n\n\n\n## **Problem Description**\n\nWrite a SQL query to solve challenge #46.\n\n\n\n## **Table Schema**\n\n**data**\n```\n+--------+------+\n| Column | Type |\n+--------+------+\n| id     | INT  |\n| value  | INT  |\n+--------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**data**\n```\n+----+-------+\n| id | value |\n+----+-------+\n| 1  | 10    |\n| 2  | 20    |\n| 3  | 30    |\n+----+-------+\n```\n\n### **Expected Output**\n\n```\n+----+-------+\n| id | value |\n+----+-------+\n| 1  | 10    |\n| 2  | 20    |\n| 3  | 30    |\n+----+-------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE t29(id INT, val INT); INSERT INTO t29 VALUES (1,10),(2,20),(3,30);",
-            "solutionSql": "SELECT * FROM t29;"
+            "setupSql": "CREATE TABLE data(id INT, value INT); INSERT INTO data VALUES (1,10),(2,20),(3,30);",
+            "solutionSql": "SELECT * FROM data;"
         },
         {
             "input": "Empty",
-            "setupSql": "CREATE TABLE t29(id INT, val INT);",
-            "solutionSql": "SELECT * FROM t29;"
+            "setupSql": "CREATE TABLE data(id INT, value INT);",
+            "solutionSql": "SELECT * FROM data;"
         },
         {
-            "input": "Single",
-            "setupSql": "CREATE TABLE t29(id INT, val INT); INSERT INTO t29 VALUES (1,100);",
-            "solutionSql": "SELECT * FROM t29;"
+            "input": "Large",
+            "setupSql": "CREATE TABLE data(id INT, value INT); INSERT INTO data VALUES (1,10),(2,20),(3,30);",
+            "solutionSql": "SELECT * FROM data;"
         }
     ]
 }

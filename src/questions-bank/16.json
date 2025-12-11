@@ -1,23 +1,27 @@
 {
     "id": 16,
-    "title": "Combine Two Tables",
+    "title": "Average Order Value",
     "difficulty": "Easy",
-    "markdown": "\n# **Combine Two Tables**\n\n## Report firstName, lastName, city, and state of each person, regardless of address.\n\n### Table Schema\n**Person**: personId, lastName, firstName\n**Address**: addressId, personId, city, state\n\n### Example\n\n**Input:**\n```\n**Person**\n+----------+----------+-----------+\n| personId | lastName | firstName |\n+----------+----------+-----------+\n| 1        | Wang     | Allen     |\n| 2        | Alice    | Bob       |\n+----------+----------+-----------+\n\n**Address**\n+-----------+----------+----------+-------+\n| addressId | personId | city     | state |\n+-----------+----------+----------+-------+\n| 1         | 2        | New York | NY    |\n+-----------+----------+----------+-------+\n```\n\n**Expected Output:**\n```\n+-----------+----------+----------+-------+\n| firstName | lastName | city     | state |\n+-----------+----------+----------+-------+\n| Allen     | Wang     | None     | None  |\n| Bob       | Alice    | New York | NY    |\n+-----------+----------+----------+-------+\n```\n",
+    "tags": [
+        "AVG",
+        "JOIN"
+    ],
+    "markdown": "# **Average Order Value**\n\n**Difficulty:** Easy  \u2022  **Tags:** `AVG` \u2022 `JOIN`\n\n\n\n## **Problem Description**\n\nCalculate the average order value for each customer.\n\n\n\n## **Table Schema**\n\n**customers**\n```\n+--------+------+\n| Column | Type |\n+--------+------+\n| id     | INT  |\n| name   | TEXT |\n+--------+------+\n```\n\n**orders**\n```\n+-------------+------+\n| Column      | Type |\n+-------------+------+\n| id          | INT  |\n| customer_id | INT  |\n| amount      | INT  |\n+-------------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**customers**\n```\n+----+-------+\n| id | name  |\n+----+-------+\n| 1  | Alice |\n| 2  | Bob   |\n+----+-------+\n```\n\n**orders**\n```\n+----+-------------+--------+\n| id | customer_id | amount |\n+----+-------------+--------+\n| 1  | 1           | 100    |\n| 2  | 1           | 200    |\n| 3  | 2           | 150    |\n+----+-------------+--------+\n```\n\n### **Expected Output**\n\n```\n+-------+-----------+\n| name  | avg_order |\n+-------+-----------+\n| Alice | 150.0     |\n| Bob   | 150.0     |\n+-------+-----------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE Person(personId INT, lastName TEXT, firstName TEXT); CREATE TABLE Address(addressId INT, personId INT, city TEXT, state TEXT); INSERT INTO Person VALUES (1,'Wang','Allen'),(2,'Alice','Bob'); INSERT INTO Address VALUES (1,2,'New York','NY');",
-            "solutionSql": "SELECT p.firstName, p.lastName, a.city, a.state FROM Person p LEFT JOIN Address a ON p.personId = a.personId;"
+            "setupSql": "CREATE TABLE customers(id INT, name TEXT); CREATE TABLE orders(id INT, customer_id INT, amount INT); INSERT INTO customers VALUES (1,'Alice'),(2,'Bob'); INSERT INTO orders VALUES (1,1,100),(2,1,200),(3,2,150);",
+            "solutionSql": "SELECT c.name, AVG(o.amount) as avg_order FROM customers c JOIN orders o ON c.id = o.customer_id GROUP BY c.id;"
         },
         {
-            "input": "No Address",
-            "setupSql": "CREATE TABLE Person(personId INT, lastName TEXT, firstName TEXT); CREATE TABLE Address(addressId INT, personId INT, city TEXT, state TEXT); INSERT INTO Person VALUES (1,'Wang','Allen');",
-            "solutionSql": "SELECT p.firstName, p.lastName, a.city, a.state FROM Person p LEFT JOIN Address a ON p.personId = a.personId;"
+            "input": "Empty",
+            "setupSql": "CREATE TABLE customers(id INT, name TEXT);",
+            "solutionSql": "SELECT c.name, AVG(o.amount) as avg_order FROM customers c JOIN orders o ON c.id = o.customer_id GROUP BY c.id;"
         },
         {
-            "input": "All Have Address",
-            "setupSql": "CREATE TABLE Person(personId INT, lastName TEXT, firstName TEXT); CREATE TABLE Address(addressId INT, personId INT, city TEXT, state TEXT); INSERT INTO Person VALUES (1,'A','B'),(2,'C','D'); INSERT INTO Address VALUES (1,1,'LA','CA'),(2,2,'NY','NY');",
-            "solutionSql": "SELECT p.firstName, p.lastName, a.city, a.state FROM Person p LEFT JOIN Address a ON p.personId = a.personId;"
+            "input": "Large",
+            "setupSql": "CREATE TABLE customers(id INT, name TEXT); CREATE TABLE orders(id INT, customer_id INT, amount INT); INSERT INTO customers VALUES (1,'Alice'),(2,'Bob'); INSERT INTO orders VALUES (1,1,100),(2,1,200),(3,2,150);",
+            "solutionSql": "SELECT c.name, AVG(o.amount) as avg_order FROM customers c JOIN orders o ON c.id = o.customer_id GROUP BY c.id;"
         }
     ]
 }

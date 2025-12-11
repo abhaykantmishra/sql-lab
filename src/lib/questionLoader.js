@@ -48,9 +48,6 @@ import question47 from '@/questions-bank/47.json';
 import question48 from '@/questions-bank/48.json';
 import question49 from '@/questions-bank/49.json';
 import question50 from '@/questions-bank/50.json';
-import question51 from '@/questions-bank/51.json';
-import question52 from '@/questions-bank/52.json';
-import question53 from '@/questions-bank/53.json';
 
 export const QUESTIONS = [
     question01,
@@ -103,9 +100,6 @@ export const QUESTIONS = [
     question48,
     question49,
     question50,
-    question51,
-    question52,
-    question53,
 ];
 
 export const getQuestionById = (id) => {

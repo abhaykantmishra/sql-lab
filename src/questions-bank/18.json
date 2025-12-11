@@ -1,23 +1,29 @@
 {
     "id": 18,
-    "title": "Department Top 3 Salaries",
-    "difficulty": "Hard",
-    "markdown": "\n# **Department Top 3 Salaries**\n\n## Implement the 'Department Top 3 Salaries' query using WINDOW, DENSE_RANK.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id | INT |\n| val | INT |\n\n### Example\n\n**Input:**\n```\n**t1**\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n\n**Expected Output:**\n```\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n",
+    "title": "Top Selling Products",
+    "difficulty": "Medium",
+    "tags": [
+        "JOIN",
+        "GROUP BY",
+        "ORDER BY",
+        "LIMIT"
+    ],
+    "markdown": "# **Top Selling Products**\n\n**Difficulty:** Medium  \u2022  **Tags:** `JOIN` \u2022 `GROUP BY` \u2022 `ORDER BY` \u2022 `LIMIT`\n\n\n\n## **Problem Description**\n\nFind the top 3 best-selling products by total quantity sold.\n\n\n\n## **Table Schema**\n\n**products**\n```\n+--------+------+\n| Column | Type |\n+--------+------+\n| id     | INT  |\n| name   | TEXT |\n+--------+------+\n```\n\n**sales**\n```\n+------------+------+\n| Column     | Type |\n+------------+------+\n| id         | INT  |\n| product_id | INT  |\n| quantity   | INT  |\n+------------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**products**\n```\n+----+------+\n| id | name |\n+----+------+\n| 1  | A    |\n| 2  | B    |\n| 3  | C    |\n| 4  | D    |\n+----+------+\n```\n\n**sales**\n```\n+----+------------+----------+\n| id | product_id | quantity |\n+----+------------+----------+\n| 1  | 1          | 10       |\n| 2  | 2          | 20       |\n| 3  | 1          | 5        |\n| 4  | 3          | 30       |\n| 5  | 2          | 10       |\n+----+------------+----------+\n```\n\n### **Expected Output**\n\n```\n+------+------------+\n| name | total_sold |\n+------+------------+\n| C    | 30         |\n| B    | 30         |\n| A    | 15         |\n+------+------------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE t1(id INT, val INT); INSERT INTO t1 VALUES (1,10),(2,20),(3,30);",
-            "solutionSql": "SELECT * FROM t1;"
+            "setupSql": "CREATE TABLE products(id INT, name TEXT); CREATE TABLE sales(id INT, product_id INT, quantity INT); INSERT INTO products VALUES (1,'A'),(2,'B'),(3,'C'),(4,'D'); INSERT INTO sales VALUES (1,1,10),(2,2,20),(3,1,5),(4,3,30),(5,2,10);",
+            "solutionSql": "SELECT p.name, SUM(s.quantity) as total_sold FROM products p JOIN sales s ON p.id = s.product_id GROUP BY p.id ORDER BY total_sold DESC LIMIT 3;"
         },
         {
             "input": "Empty",
-            "setupSql": "CREATE TABLE t1(id INT, val INT);",
-            "solutionSql": "SELECT * FROM t1;"
+            "setupSql": "CREATE TABLE products(id INT, name TEXT);",
+            "solutionSql": "SELECT p.name, SUM(s.quantity) as total_sold FROM products p JOIN sales s ON p.id = s.product_id GROUP BY p.id ORDER BY total_sold DESC LIMIT 3;"
         },
         {
-            "input": "Single",
-            "setupSql": "CREATE TABLE t1(id INT, val INT); INSERT INTO t1 VALUES (1,100);",
-            "solutionSql": "SELECT * FROM t1;"
+            "input": "Large",
+            "setupSql": "CREATE TABLE products(id INT, name TEXT); CREATE TABLE sales(id INT, product_id INT, quantity INT); INSERT INTO products VALUES (1,'A'),(2,'B'),(3,'C'),(4,'D'); INSERT INTO sales VALUES (1,1,10),(2,2,20),(3,1,5),(4,3,30),(5,2,10);",
+            "solutionSql": "SELECT p.name, SUM(s.quantity) as total_sold FROM products p JOIN sales s ON p.id = s.product_id GROUP BY p.id ORDER BY total_sold DESC LIMIT 3;"
         }
     ]
 }

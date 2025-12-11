@@ -5,7 +5,7 @@ import ProblemDescription from './ProblemDescription';
 import CodeEditor from './CodeEditor';
 import TestResults from './TestResults';
 import QuestionList from './QuestionList';
-import { Play, CheckCheck, List } from 'lucide-react';
+import { Play, CheckCheck, List, CornerDownLeft } from 'lucide-react';
 import { getQuestionById } from '@/lib/questionLoader';
 import { QUESTIONS } from '@/questions-bank/questions-list';
 import { runQuery, checkSolution } from '@/lib/sqlEngine';
@@ -96,7 +96,7 @@ const Workspace = () => {
                         className="flex items-center gap-2 px-4 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded text-sm font-medium transition-colors"
                     >
                         <Play size={16} className="fill-zinc-100" />
-                        {<>Run <span className='text-xs text-center border border-white p-0.5 rounded-10'>Ctrl+k</span></>}
+                        {<>Run <span className='text-xs text-center border border-white p-0.5 rounded-10 hidden md:flex flex-row'> Ctrl+ <CornerDownLeft className='text-xs text-center w-4 h-4' /></span></>}
                     </button>
                     <button
                         onClick={handleSubmit}

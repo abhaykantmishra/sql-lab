@@ -1,23 +1,27 @@
 {
     "id": 24,
-    "title": "Product Sales Analysis",
-    "difficulty": "Easy",
-    "markdown": "\n# **Product Sales Analysis**\n\n## Implement the 'Product Sales Analysis' query using JOIN, MIN.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id | INT |\n| val | INT |\n\n### Example\n\n**Input:**\n```\n**t7**\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n\n**Expected Output:**\n```\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n",
+    "title": "Running Total",
+    "difficulty": "Medium",
+    "tags": [
+        "WINDOW FUNCTION",
+        "SUM"
+    ],
+    "markdown": "# **Running Total**\n\n**Difficulty:** Medium  \u2022  **Tags:** `WINDOW FUNCTION` \u2022 `SUM`\n\n\n\n## **Problem Description**\n\nCalculate a running total of sales amounts.\n\n\n\n## **Table Schema**\n\n**sales**\n```\n+-----------+------+\n| Column    | Type |\n+-----------+------+\n| id        | INT  |\n| sale_date | DATE |\n| amount    | INT  |\n+-----------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**sales**\n```\n+----+------------+--------+\n| id | sale_date  | amount |\n+----+------------+--------+\n| 1  | 2023-01-01 | 100    |\n| 2  | 2023-01-02 | 150    |\n| 3  | 2023-01-03 | 200    |\n+----+------------+--------+\n```\n\n### **Expected Output**\n\n```\n+----+------------+--------+---------------+\n| id | sale_date  | amount | running_total |\n+----+------------+--------+---------------+\n| 1  | 2023-01-01 | 100    | 100           |\n| 2  | 2023-01-02 | 150    | 250           |\n| 3  | 2023-01-03 | 200    | 450           |\n+----+------------+--------+---------------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE t7(id INT, val INT); INSERT INTO t7 VALUES (1,10),(2,20),(3,30);",
-            "solutionSql": "SELECT * FROM t7;"
+            "setupSql": "CREATE TABLE sales(id INT, sale_date DATE, amount INT); INSERT INTO sales VALUES (1,'2023-01-01',100),(2,'2023-01-02',150),(3,'2023-01-03',200);",
+            "solutionSql": "SELECT id, sale_date, amount, SUM(amount) OVER (ORDER BY sale_date) as running_total FROM sales;"
         },
         {
             "input": "Empty",
-            "setupSql": "CREATE TABLE t7(id INT, val INT);",
-            "solutionSql": "SELECT * FROM t7;"
+            "setupSql": "CREATE TABLE sales(id INT, sale_date DATE, amount INT);",
+            "solutionSql": "SELECT id, sale_date, amount, SUM(amount) OVER (ORDER BY sale_date) as running_total FROM sales;"
         },
         {
-            "input": "Single",
-            "setupSql": "CREATE TABLE t7(id INT, val INT); INSERT INTO t7 VALUES (1,100);",
-            "solutionSql": "SELECT * FROM t7;"
+            "input": "Large",
+            "setupSql": "CREATE TABLE sales(id INT, sale_date DATE, amount INT); INSERT INTO sales VALUES (1,'2023-01-01',100),(2,'2023-01-02',150),(3,'2023-01-03',200);",
+            "solutionSql": "SELECT id, sale_date, amount, SUM(amount) OVER (ORDER BY sale_date) as running_total FROM sales;"
         }
     ]
 }

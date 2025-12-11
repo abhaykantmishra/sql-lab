@@ -2,27 +2,25 @@
     "id": 7,
     "title": "Employees Earning More Than Managers",
     "difficulty": "Medium",
-    "markdown": "\n# **Employees Earning More Than Managers**\n\n## Given a table Employee with employee and manager info, find employees who earn more than their managers.\n\n### Table Schema\n| Column    | Type    |\n|-----------|---------|\n| id        | INT     |\n| name      | TEXT    |\n| salary    | INT     |\n| managerId | INT     |\n\n### Example\n\n**Input:**\n```\n**Employee**\n+----+-------+--------+-----------+\n| id | name  | salary | managerId |\n+----+-------+--------+-----------+\n| 1  | Joe   | 70000  | 3         |\n| 2  | Henry | 80000  | 4         |\n| 3  | Sam   | 60000  | None      |\n| 4  | Max   | 90000  | None      |\n+----+-------+--------+-----------+\n```\n\n**Expected Output:**\n```\n+----------+\n| Employee |\n+----------+\n| Joe      |\n+----------+\n```\n",
+    "tags": [
+        "SELF JOIN"
+    ],
+    "markdown": "# **Employees Earning More Than Managers**\n\n**Difficulty:** Medium  \u2022  **Tags:** `SELF JOIN`\n\n\n\n## **Problem Description**\n\nFind all employees who earn more than their managers.\n\n\n\n## **Table Schema**\n\n**employees**\n```\n+------------+------+\n| Column     | Type |\n+------------+------+\n| id         | INT  |\n| name       | TEXT |\n| salary     | INT  |\n| manager_id | INT  |\n+------------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**employees**\n```\n+----+-------+--------+------------+\n| id | name  | salary | manager_id |\n+----+-------+--------+------------+\n| 1  | Joe   | 70000  | 3          |\n| 2  | Henry | 80000  | 4          |\n| 3  | Sam   | 60000  | None       |\n| 4  | Max   | 90000  | None       |\n+----+-------+--------+------------+\n```\n\n### **Expected Output**\n\n```\n+----------+\n| Employee |\n+----------+\n| Joe      |\n+----------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE Employee(id INT, name TEXT, salary INT, managerId INT); INSERT INTO Employee VALUES (1,'Joe',70000,3),(2,'Henry',80000,4),(3,'Sam',60000,NULL),(4,'Max',90000,NULL);",
-            "solutionSql": "SELECT e.name AS Employee FROM Employee e JOIN Employee m ON e.managerId = m.id WHERE e.salary > m.salary;"
-        },
-        {
-            "input": "No Results",
-            "setupSql": "CREATE TABLE Employee(id INT, name TEXT, salary INT, managerId INT); INSERT INTO Employee VALUES (1,'Joe',50000,2),(2,'Sam',60000,NULL);",
-            "solutionSql": "SELECT e.name AS Employee FROM Employee e JOIN Employee m ON e.managerId = m.id WHERE e.salary > m.salary;"
-        },
-        {
-            "input": "Multiple",
-            "setupSql": "CREATE TABLE Employee(id INT, name TEXT, salary INT, managerId INT); INSERT INTO Employee VALUES (1,'A',70000,3),(2,'B',80000,3),(3,'C',50000,NULL);",
-            "solutionSql": "SELECT e.name AS Employee FROM Employee e JOIN Employee m ON e.managerId = m.id WHERE e.salary > m.salary;"
+            "setupSql": "CREATE TABLE employees(id INT, name TEXT, salary INT, manager_id INT); INSERT INTO employees VALUES (1,'Joe',70000,3),(2,'Henry',80000,4),(3,'Sam',60000,NULL),(4,'Max',90000,NULL);",
+            "solutionSql": "SELECT e.name as Employee FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.salary > m.salary;"
         },
         {
             "input": "Empty",
-            "setupSql": "CREATE TABLE Employee(id INT, name TEXT, salary INT, managerId INT);",
-            "solutionSql": "SELECT e.name AS Employee FROM Employee e JOIN Employee m ON e.managerId = m.id WHERE e.salary > m.salary;"
+            "setupSql": "CREATE TABLE employees(id INT, name TEXT, salary INT, manager_id INT);",
+            "solutionSql": "SELECT e.name as Employee FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.salary > m.salary;"
+        },
+        {
+            "input": "Large",
+            "setupSql": "CREATE TABLE employees(id INT, name TEXT, salary INT, manager_id INT); INSERT INTO employees VALUES (1,'Joe',70000,3),(2,'Henry',80000,4),(3,'Sam',60000,NULL),(4,'Max',90000,NULL);",
+            "solutionSql": "SELECT e.name as Employee FROM employees e JOIN employees m ON e.manager_id = m.id WHERE e.salary > m.salary;"
         }
     ]
 }

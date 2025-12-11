@@ -2,7 +2,7 @@
     "id": 54,
     "title": "Rising Temperature",
     "difficulty": "Easy",
-    "markdown": "\n# **Rising Temperature**\n\n## Write an SQL query to find all dates' Ids with higher temperatures compared to its previous dates (yesterday).\n\n### Table Schema\n| Column | Type | Description |\n|---|---|---|\n| id | INTEGER | Primary Key |\n| recordDate | DATE | Date |\n| temperature | INTEGER | Temp |\n\n### Example\n\n**Input:**\n```\n**Weather**\n+----+------------+-------------+\n| id | recordDate | temperature |\n+----+------------+-------------+\n| 1  | 2015-01-01 | 10          |\n| 2  | 2015-01-02 | 25          |\n| 3  | 2015-01-03 | 20          |\n| 4  | 2015-01-04 | 30          |\n+----+------------+-------------+\n```\n\n**Expected Output:**\n```\n+----+\n| id |\n+----+\n| 2  |\n| 4  |\n+----+\n```\n",
+    "markdown": "# **Rising Temperature**\n\n**Difficulty:** Easy  \u2022  **Tags:** \n\n\n\n## **Problem Description**\n\nSolve the Rising Temperature problem using SQL.\n\n\n\n## **Table Schema**\n\n**Weather**\n```\n+-------------+---------+\n| Column      | Type    |\n+-------------+---------+\n| id          | INTEGER |\n| recordDate  | DATE    |\n| temperature | INTEGER |\n+-------------+---------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**Weather**\n```\n+----+------------+-------------+\n| id | recordDate | temperature |\n+----+------------+-------------+\n| 1  | 2015-01-01 | 10          |\n| 2  | 2015-01-02 | 25          |\n| 3  | 2015-01-03 | 20          |\n| 4  | 2015-01-04 | 30          |\n+----+------------+-------------+\n```\n\n### **Expected Output**\n\n```\n+----+\n| id |\n+----+\n| 2  |\n| 4  |\n+----+\n```\n",
     "testCases": [
         {
             "input": "Standard dataset",

@@ -1,23 +1,28 @@
 {
     "id": 21,
-    "title": "Tree Node",
-    "difficulty": "Medium",
-    "markdown": "\n# **Tree Node**\n\n## Implement the 'Tree Node' query using CASE, SUBQUERY.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id | INT |\n| val | INT |\n\n### Example\n\n**Input:**\n```\n**t4**\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n\n**Expected Output:**\n```\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n",
+    "title": "Active Users",
+    "difficulty": "Easy",
+    "tags": [
+        "COUNT",
+        "DISTINCT",
+        "WHERE"
+    ],
+    "markdown": "# **Active Users**\n\n**Difficulty:** Easy  \u2022  **Tags:** `COUNT` \u2022 `DISTINCT` \u2022 `WHERE`\n\n\n\n## **Problem Description**\n\nCount the number of users who logged in within the last 30 days.\n\n\n\n## **Table Schema**\n\n**logins**\n```\n+------------+------+\n| Column     | Type |\n+------------+------+\n| user_id    | INT  |\n| login_date | DATE |\n+------------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**logins**\n```\n+---------+------------+\n| user_id | login_date |\n+---------+------------+\n| 1       | 2023-12-01 |\n| 2       | 2023-12-05 |\n| 1       | 2023-12-10 |\n| 3       | 2023-11-01 |\n+---------+------------+\n```\n\n### **Expected Output**\n\n```\n+--------------+\n| active_users |\n+--------------+\n| 3            |\n+--------------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE t4(id INT, val INT); INSERT INTO t4 VALUES (1,10),(2,20),(3,30);",
-            "solutionSql": "SELECT * FROM t4;"
+            "setupSql": "CREATE TABLE logins(user_id INT, login_date DATE); INSERT INTO logins VALUES (1,'2023-12-01'),(2,'2023-12-05'),(1,'2023-12-10'),(3,'2023-11-01');",
+            "solutionSql": "SELECT COUNT(DISTINCT user_id) as active_users FROM logins WHERE login_date >= date('2023-12-01', '-30 days');"
         },
         {
             "input": "Empty",
-            "setupSql": "CREATE TABLE t4(id INT, val INT);",
-            "solutionSql": "SELECT * FROM t4;"
+            "setupSql": "CREATE TABLE logins(user_id INT, login_date DATE);",
+            "solutionSql": "SELECT COUNT(DISTINCT user_id) as active_users FROM logins WHERE login_date >= date('2023-12-01', '-30 days');"
         },
         {
-            "input": "Single",
-            "setupSql": "CREATE TABLE t4(id INT, val INT); INSERT INTO t4 VALUES (1,100);",
-            "solutionSql": "SELECT * FROM t4;"
+            "input": "Large",
+            "setupSql": "CREATE TABLE logins(user_id INT, login_date DATE); INSERT INTO logins VALUES (1,'2023-12-01'),(2,'2023-12-05'),(1,'2023-12-10'),(3,'2023-11-01');",
+            "solutionSql": "SELECT COUNT(DISTINCT user_id) as active_users FROM logins WHERE login_date >= date('2023-12-01', '-30 days');"
         }
     ]
 }

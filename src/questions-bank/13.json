@@ -1,23 +1,27 @@
 {
     "id": 13,
-    "title": "Delete Duplicate Emails",
-    "difficulty": "Easy",
-    "markdown": "\n# **Delete Duplicate Emails**\n\n## Write a SQL query to delete all duplicate email entries, keeping only the one with the smallest Id.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id     | INT  |\n| email  | TEXT |\n\n### Example\n\n**Input:**\n```\n**Person**\n+----+------------------+\n| id | email            |\n+----+------------------+\n| 1  | john@example.com |\n| 2  | bob@example.com  |\n| 3  | john@example.com |\n+----+------------------+\n```\n\n**Expected Output:**\n```\n+----+------------------+\n| id | email            |\n+----+------------------+\n| 2  | bob@example.com  |\n| 1  | john@example.com |\n+----+------------------+\n```\n",
+    "title": "Exchange Seats",
+    "difficulty": "Medium",
+    "tags": [
+        "CASE",
+        "MOD"
+    ],
+    "markdown": "# **Exchange Seats**\n\n**Difficulty:** Medium  \u2022  **Tags:** `CASE` \u2022 `MOD`\n\n\n\n## **Problem Description**\n\nSwap the seat id of every two consecutive students. If odd total, last student stays.\n\n\n\n## **Table Schema**\n\n**seats**\n```\n+---------+------+\n| Column  | Type |\n+---------+------+\n| id      | INT  |\n| student | TEXT |\n+---------+------+\n```\n\n\n\n## **Example**\n\n### **Input**\n\n**seats**\n```\n+----+---------+\n| id | student |\n+----+---------+\n| 1  | Abbot   |\n| 2  | Doris   |\n| 3  | Emerson |\n| 4  | Green   |\n| 5  | Jeames  |\n+----+---------+\n```\n\n### **Expected Output**\n\n```\n+----+---------+\n| id | student |\n+----+---------+\n| 1  | Doris   |\n| 2  | Abbot   |\n| 3  | Green   |\n| 4  | Emerson |\n| 5  | Jeames  |\n+----+---------+\n```\n",
     "testCases": [
         {
             "input": "Standard",
-            "setupSql": "CREATE TABLE Person(id INT, email TEXT); INSERT INTO Person VALUES (1,'john@example.com'),(2,'bob@example.com'),(3,'john@example.com');",
-            "solutionSql": "SELECT MIN(id) as id, email FROM Person GROUP BY email;"
+            "setupSql": "CREATE TABLE seats(id INT, student TEXT); INSERT INTO seats VALUES (1,'Abbot'),(2,'Doris'),(3,'Emerson'),(4,'Green'),(5,'Jeames');",
+            "solutionSql": "SELECT CASE WHEN id % 2 = 1 AND id = (SELECT COUNT(*) FROM seats) THEN id WHEN id % 2 = 1 THEN id + 1 ELSE id - 1 END AS id, student FROM seats ORDER BY id;"
         },
         {
-            "input": "No Duplicates",
-            "setupSql": "CREATE TABLE Person(id INT, email TEXT); INSERT INTO Person VALUES (1,'a@b.com'),(2,'c@d.com');",
-            "solutionSql": "SELECT MIN(id) as id, email FROM Person GROUP BY email;"
+            "input": "Empty",
+            "setupSql": "CREATE TABLE seats(id INT, student TEXT);",
+            "solutionSql": "SELECT CASE WHEN id % 2 = 1 AND id = (SELECT COUNT(*) FROM seats) THEN id WHEN id % 2 = 1 THEN id + 1 ELSE id - 1 END AS id, student FROM seats ORDER BY id;"
         },
         {
-            "input": "All Duplicates",
-            "setupSql": "CREATE TABLE Person(id INT, email TEXT); INSERT INTO Person VALUES (1,'a@b.com'),(2,'a@b.com'),(3,'a@b.com');",
-            "solutionSql": "SELECT MIN(id) as id, email FROM Person GROUP BY email;"
+            "input": "Large",
+            "setupSql": "CREATE TABLE seats(id INT, student TEXT); INSERT INTO seats VALUES (1,'Abbot'),(2,'Doris'),(3,'Emerson'),(4,'Green'),(5,'Jeames');",
+            "solutionSql": "SELECT CASE WHEN id % 2 = 1 AND id = (SELECT COUNT(*) FROM seats) THEN id WHEN id % 2 = 1 THEN id + 1 ELSE id - 1 END AS id, student FROM seats ORDER BY id;"
         }
     ]
 }
