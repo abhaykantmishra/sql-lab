@@ -18,6 +18,18 @@ const Workspace = () => {
     const [error, setError] = useState(null);
     const [status, setStatus] = useState(null); // 'Passed' | 'Failed' | null
     const [showQuestionList, setShowQuestionList] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleRun = async () => {
         console.log("run");
@@ -62,6 +74,10 @@ const Workspace = () => {
     const handleSelectQuestion = (question) => {
         const q = getQuestionById(question.id);
         setCurrentQuestion(q);
+
+        if (isMobile)
+            setShowQuestionList(false);
+
         setCode("-- Write your SQL query here\n");
         setResults(null);
         setError(null);
@@ -96,7 +112,7 @@ const Workspace = () => {
                         className="flex items-center gap-2 px-4 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded text-sm font-medium transition-colors"
                     >
                         <Play size={16} className="fill-zinc-100" />
-                        {<>Run <span className='text-xs text-center border border-white p-0.5 rounded-10 hidden md:flex flex-row'> Ctrl+ <CornerDownLeft className='text-xs text-center w-4 h-4' /></span></>}
+                        {<>Run <span className='text-xs text-center border-[0.1px] border-zinc-500 p-0.5 rounded-10 hidden md:flex flex-row'> Ctrl+ <CornerDownLeft className='text-xs text-center w-4 h-4' /></span></>}
                     </button>
                     <button
                         onClick={handleSubmit}
@@ -109,9 +125,9 @@ const Workspace = () => {
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 overflow-hidden flex">
+            <div className="flex-1 overflow-hidden flex max-h-[calc(100vh-5rem)]">
                 {showQuestionList && (
-                    <div className="w-64 shrink-0 h-full border-r border-zinc-800 hidden md:block">
+                    <div className="absolute lg:relative z-50 w-64 shrink-0 max-h-[calc(100vh-6rem)] h-full border-r border-zinc-800">
                         <QuestionList
                             questions={QUESTIONS}
                             currentQuestionId={currentQuestion?.id}
@@ -120,8 +136,8 @@ const Workspace = () => {
                     </div>
                 )}
 
-                <div className="flex-1 h-full overflow-hidden">
-                    <PanelGroup direction="horizontal">
+                <div className="md:flex-1 h-full w-full overflow-hidden">
+                    <PanelGroup direction={isMobile ? "vertical" : "horizontal"}>
                         {/* Left Panel: Problem Description */}
                         <Panel defaultSize={40} minSize={20}>
                             <ProblemDescription question={currentQuestion} />
