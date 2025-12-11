@@ -1,0 +1,23 @@
+{
+    "id": 13,
+    "title": "Delete Duplicate Emails",
+    "difficulty": "Easy",
+    "markdown": "\n# **Delete Duplicate Emails**\n\n## Write a SQL query to delete all duplicate email entries, keeping only the one with the smallest Id.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id     | INT  |\n| email  | TEXT |\n\n### Example\n\n**Input:**\n```\n**Person**\n+----+------------------+\n| id | email            |\n+----+------------------+\n| 1  | john@example.com |\n| 2  | bob@example.com  |\n| 3  | john@example.com |\n+----+------------------+\n```\n\n**Expected Output:**\n```\n+----+------------------+\n| id | email            |\n+----+------------------+\n| 2  | bob@example.com  |\n| 1  | john@example.com |\n+----+------------------+\n```\n",
+    "testCases": [
+        {
+            "input": "Standard",
+            "setupSql": "CREATE TABLE Person(id INT, email TEXT); INSERT INTO Person VALUES (1,'john@example.com'),(2,'bob@example.com'),(3,'john@example.com');",
+            "solutionSql": "SELECT MIN(id) as id, email FROM Person GROUP BY email;"
+        },
+        {
+            "input": "No Duplicates",
+            "setupSql": "CREATE TABLE Person(id INT, email TEXT); INSERT INTO Person VALUES (1,'a@b.com'),(2,'c@d.com');",
+            "solutionSql": "SELECT MIN(id) as id, email FROM Person GROUP BY email;"
+        },
+        {
+            "input": "All Duplicates",
+            "setupSql": "CREATE TABLE Person(id INT, email TEXT); INSERT INTO Person VALUES (1,'a@b.com'),(2,'a@b.com'),(3,'a@b.com');",
+            "solutionSql": "SELECT MIN(id) as id, email FROM Person GROUP BY email;"
+        }
+    ]
+}

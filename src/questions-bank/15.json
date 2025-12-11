@@ -1,0 +1,23 @@
+{
+    "id": 15,
+    "title": "Classes More Than 5 Students",
+    "difficulty": "Easy",
+    "markdown": "\n# **Classes More Than 5 Students**\n\n## List all classes with more than or equal to 5 students.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| student | TEXT |\n| class | TEXT |\n\n### Example\n\n**Input:**\n```\n**courses**\n+---------+----------+\n| student | class    |\n+---------+----------+\n| A       | Math     |\n| B       | English  |\n| C       | Math     |\n| D       | Biology  |\n| E       | Math     |\n| F       | Computer |\n| G       | Math     |\n| H       | Math     |\n| I       | Math     |\n+---------+----------+\n```\n\n**Expected Output:**\n```\n+-------+\n| class |\n+-------+\n| Math  |\n+-------+\n```\n",
+    "testCases": [
+        {
+            "input": "Standard",
+            "setupSql": "CREATE TABLE courses(student TEXT, class TEXT); INSERT INTO courses VALUES ('A','Math'),('B','English'),('C','Math'),('D','Biology'),('E','Math'),('F','Computer'),('G','Math'),('H','Math'),('I','Math');",
+            "solutionSql": "SELECT class FROM courses GROUP BY class HAVING COUNT(student) >= 5;"
+        },
+        {
+            "input": "No Class",
+            "setupSql": "CREATE TABLE courses(student TEXT, class TEXT); INSERT INTO courses VALUES ('A','Math'),('B','English');",
+            "solutionSql": "SELECT class FROM courses GROUP BY class HAVING COUNT(student) >= 5;"
+        },
+        {
+            "input": "Multiple",
+            "setupSql": "CREATE TABLE courses(student TEXT, class TEXT); INSERT INTO courses VALUES ('A','Math'),('B','Math'),('C','Math'),('D','Math'),('E','Math'),('F','Sci'),('G','Sci'),('H','Sci'),('I','Sci'),('J','Sci');",
+            "solutionSql": "SELECT class FROM courses GROUP BY class HAVING COUNT(student) >= 5;"
+        }
+    ]
+}

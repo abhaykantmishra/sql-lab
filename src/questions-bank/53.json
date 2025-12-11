@@ -1,0 +1,23 @@
+{
+    "id": 53,
+    "title": "Immediate Food Delivery",
+    "difficulty": "Medium",
+    "markdown": "\n# **Immediate Food Delivery**\n\n## Implement the 'Immediate Food Delivery' query using CASE, AVG.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id | INT |\n| val | INT |\n\n### Example\n\n**Input:**\n```\n**t36**\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n\n**Expected Output:**\n```\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n",
+    "testCases": [
+        {
+            "input": "Standard",
+            "setupSql": "CREATE TABLE t36(id INT, val INT); INSERT INTO t36 VALUES (1,10),(2,20),(3,30);",
+            "solutionSql": "SELECT * FROM t36;"
+        },
+        {
+            "input": "Empty",
+            "setupSql": "CREATE TABLE t36(id INT, val INT);",
+            "solutionSql": "SELECT * FROM t36;"
+        },
+        {
+            "input": "Single",
+            "setupSql": "CREATE TABLE t36(id INT, val INT); INSERT INTO t36 VALUES (1,100);",
+            "solutionSql": "SELECT * FROM t36;"
+        }
+    ]
+}

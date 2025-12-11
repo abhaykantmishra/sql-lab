@@ -1,0 +1,23 @@
+{
+    "id": 16,
+    "title": "Combine Two Tables",
+    "difficulty": "Easy",
+    "markdown": "\n# **Combine Two Tables**\n\n## Report firstName, lastName, city, and state of each person, regardless of address.\n\n### Table Schema\n**Person**: personId, lastName, firstName\n**Address**: addressId, personId, city, state\n\n### Example\n\n**Input:**\n```\n**Person**\n+----------+----------+-----------+\n| personId | lastName | firstName |\n+----------+----------+-----------+\n| 1        | Wang     | Allen     |\n| 2        | Alice    | Bob       |\n+----------+----------+-----------+\n\n**Address**\n+-----------+----------+----------+-------+\n| addressId | personId | city     | state |\n+-----------+----------+----------+-------+\n| 1         | 2        | New York | NY    |\n+-----------+----------+----------+-------+\n```\n\n**Expected Output:**\n```\n+-----------+----------+----------+-------+\n| firstName | lastName | city     | state |\n+-----------+----------+----------+-------+\n| Allen     | Wang     | None     | None  |\n| Bob       | Alice    | New York | NY    |\n+-----------+----------+----------+-------+\n```\n",
+    "testCases": [
+        {
+            "input": "Standard",
+            "setupSql": "CREATE TABLE Person(personId INT, lastName TEXT, firstName TEXT); CREATE TABLE Address(addressId INT, personId INT, city TEXT, state TEXT); INSERT INTO Person VALUES (1,'Wang','Allen'),(2,'Alice','Bob'); INSERT INTO Address VALUES (1,2,'New York','NY');",
+            "solutionSql": "SELECT p.firstName, p.lastName, a.city, a.state FROM Person p LEFT JOIN Address a ON p.personId = a.personId;"
+        },
+        {
+            "input": "No Address",
+            "setupSql": "CREATE TABLE Person(personId INT, lastName TEXT, firstName TEXT); CREATE TABLE Address(addressId INT, personId INT, city TEXT, state TEXT); INSERT INTO Person VALUES (1,'Wang','Allen');",
+            "solutionSql": "SELECT p.firstName, p.lastName, a.city, a.state FROM Person p LEFT JOIN Address a ON p.personId = a.personId;"
+        },
+        {
+            "input": "All Have Address",
+            "setupSql": "CREATE TABLE Person(personId INT, lastName TEXT, firstName TEXT); CREATE TABLE Address(addressId INT, personId INT, city TEXT, state TEXT); INSERT INTO Person VALUES (1,'A','B'),(2,'C','D'); INSERT INTO Address VALUES (1,1,'LA','CA'),(2,2,'NY','NY');",
+            "solutionSql": "SELECT p.firstName, p.lastName, a.city, a.state FROM Person p LEFT JOIN Address a ON p.personId = a.personId;"
+        }
+    ]
+}

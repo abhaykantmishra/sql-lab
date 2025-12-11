@@ -1,0 +1,23 @@
+{
+    "id": 24,
+    "title": "Product Sales Analysis",
+    "difficulty": "Easy",
+    "markdown": "\n# **Product Sales Analysis**\n\n## Implement the 'Product Sales Analysis' query using JOIN, MIN.\n\n### Table Schema\n| Column | Type |\n|--------|------|\n| id | INT |\n| val | INT |\n\n### Example\n\n**Input:**\n```\n**t7**\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n\n**Expected Output:**\n```\n+----+-----+\n| id | val |\n+----+-----+\n| 1  | 10  |\n| 2  | 20  |\n| 3  | 30  |\n+----+-----+\n```\n",
+    "testCases": [
+        {
+            "input": "Standard",
+            "setupSql": "CREATE TABLE t7(id INT, val INT); INSERT INTO t7 VALUES (1,10),(2,20),(3,30);",
+            "solutionSql": "SELECT * FROM t7;"
+        },
+        {
+            "input": "Empty",
+            "setupSql": "CREATE TABLE t7(id INT, val INT);",
+            "solutionSql": "SELECT * FROM t7;"
+        },
+        {
+            "input": "Single",
+            "setupSql": "CREATE TABLE t7(id INT, val INT); INSERT INTO t7 VALUES (1,100);",
+            "solutionSql": "SELECT * FROM t7;"
+        }
+    ]
+}

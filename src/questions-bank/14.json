@@ -1,0 +1,23 @@
+{
+    "id": 14,
+    "title": "Exchange Seats",
+    "difficulty": "Medium",
+    "markdown": "\n# **Exchange Seats**\n\n## Swap the seat id of every two consecutive students. If the number of students is odd, the last student is not swapped.\n\n### Table Schema\n| Column  | Type |\n|---------|------|\n| id      | INT  |\n| student | TEXT |\n\n### Example\n\n**Input:**\n```\n**seat**\n+----+---------+\n| id | student |\n+----+---------+\n| 1  | Abbot   |\n| 2  | Doris   |\n| 3  | Emerson |\n| 4  | Green   |\n| 5  | Jeames  |\n+----+---------+\n```\n\n**Expected Output:**\n```\n+----+---------+\n| id | student |\n+----+---------+\n| 1  | Doris   |\n| 2  | Abbot   |\n| 3  | Green   |\n| 4  | Emerson |\n| 5  | Jeames  |\n+----+---------+\n```\n",
+    "testCases": [
+        {
+            "input": "Odd Count",
+            "setupSql": "CREATE TABLE seat(id INT, student TEXT); INSERT INTO seat VALUES (1,'Abbot'),(2,'Doris'),(3,'Emerson'),(4,'Green'),(5,'Jeames');",
+            "solutionSql": "SELECT CASE WHEN id % 2 = 1 AND id = (SELECT COUNT(*) FROM seat) THEN id WHEN id % 2 = 1 THEN id + 1 ELSE id - 1 END AS id, student FROM seat ORDER BY id;"
+        },
+        {
+            "input": "Even Count",
+            "setupSql": "CREATE TABLE seat(id INT, student TEXT); INSERT INTO seat VALUES (1,'A'),(2,'B'),(3,'C'),(4,'D');",
+            "solutionSql": "SELECT CASE WHEN id % 2 = 1 AND id = (SELECT COUNT(*) FROM seat) THEN id WHEN id % 2 = 1 THEN id + 1 ELSE id - 1 END AS id, student FROM seat ORDER BY id;"
+        },
+        {
+            "input": "Single",
+            "setupSql": "CREATE TABLE seat(id INT, student TEXT); INSERT INTO seat VALUES (1,'A');",
+            "solutionSql": "SELECT CASE WHEN id % 2 = 1 AND id = (SELECT COUNT(*) FROM seat) THEN id WHEN id % 2 = 1 THEN id + 1 ELSE id - 1 END AS id, student FROM seat ORDER BY id;"
+        }
+    ]
+}

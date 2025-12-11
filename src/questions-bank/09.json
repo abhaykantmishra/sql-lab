@@ -1,0 +1,23 @@
+{
+    "id": 9,
+    "title": "Rising Temperature",
+    "difficulty": "Easy",
+    "markdown": "\n# **Rising Temperature**\n\n## Find all dates' IDs with higher temperature compared to the previous day.\n\n### Table Schema\n| Column      | Type |\n|-------------|------|\n| id          | INT  |\n| recordDate  | DATE |\n| temperature | INT  |\n\n### Example\n\n**Input:**\n```\n**Weather**\n+----+------------+-------------+\n| id | recordDate | temperature |\n+----+------------+-------------+\n| 1  | 2015-01-01 | 10          |\n| 2  | 2015-01-02 | 25          |\n| 3  | 2015-01-03 | 20          |\n| 4  | 2015-01-04 | 30          |\n+----+------------+-------------+\n```\n\n**Expected Output:**\n```\n+----+\n| id |\n+----+\n| 2  |\n| 4  |\n+----+\n```\n",
+    "testCases": [
+        {
+            "input": "Standard",
+            "setupSql": "CREATE TABLE Weather(id INT, recordDate DATE, temperature INT); INSERT INTO Weather VALUES (1,'2015-01-01',10),(2,'2015-01-02',25),(3,'2015-01-03',20),(4,'2015-01-04',30);",
+            "solutionSql": "SELECT w1.id FROM Weather w1 JOIN Weather w2 ON julianday(w1.recordDate) - julianday(w2.recordDate) = 1 WHERE w1.temperature > w2.temperature;"
+        },
+        {
+            "input": "Decreasing",
+            "setupSql": "CREATE TABLE Weather(id INT, recordDate DATE, temperature INT); INSERT INTO Weather VALUES (1,'2015-01-01',30),(2,'2015-01-02',20),(3,'2015-01-03',10);",
+            "solutionSql": "SELECT w1.id FROM Weather w1 JOIN Weather w2 ON julianday(w1.recordDate) - julianday(w2.recordDate) = 1 WHERE w1.temperature > w2.temperature;"
+        },
+        {
+            "input": "Single Day",
+            "setupSql": "CREATE TABLE Weather(id INT, recordDate DATE, temperature INT); INSERT INTO Weather VALUES (1,'2015-01-01',10);",
+            "solutionSql": "SELECT w1.id FROM Weather w1 JOIN Weather w2 ON julianday(w1.recordDate) - julianday(w2.recordDate) = 1 WHERE w1.temperature > w2.temperature;"
+        }
+    ]
+}
