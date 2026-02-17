@@ -1,14 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-space-mono",
 });
 
 export const metadata = {
@@ -22,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${spaceMono.variable} antialiased flex flex-col min-h-screen font-mono`}
       >
         <Header />
         <div className="flex-1 flex flex-col">

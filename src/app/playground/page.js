@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
-import { Play, RotateCcw, Database, CornerDownLeft  } from 'lucide-react';
+import { Play, RotateCcw, Database, CornerDownLeft } from 'lucide-react';
 import CodeEditor from '@/components/CodeEditor';
 import QueryResults from '@/components/QueryResults';
 import CsvUploader from '@/components/CsvUploader';
@@ -98,11 +98,11 @@ export default function PlaygroundPage() {
         try {
             // await runPersistentQuery(createTableSql);
             const initialSql = createTableSql + '\n' + '\n'
-                    +"-- Change the above data type of table as you want default is TEXT for all" + '\n'
-                    +"-- You can also add constraints on columns" + '\n'
-                    +"-- You dont need to change data types of values in `INSERT INTO` statements below" + '\n'
-                    +"-- Run the query to get the table info" + '\n'
-                    // +"SELECT name as column,type FROM pragma_table_info('" + tableName + "');" + '\n'
+                + "-- Change the above data type of table as you want default is TEXT for all" + '\n'
+                + "-- You can also add constraints on columns" + '\n'
+                + "-- You dont need to change data types of values in `INSERT INTO` statements below" + '\n'
+                + "-- Run the query to get the table info" + '\n'
+            // +"SELECT name as column,type FROM pragma_table_info('" + tableName + "');" + '\n'
             setCode(initialSql);
 
             // 2. Insert Data - TODO: Batch Insert
@@ -121,7 +121,7 @@ export default function PlaygroundPage() {
 
             let insertUiStatements = "";
             // console.log(Array(data).slice(0,10))
-            data?.slice(0,10)?.forEach(row => {
+            data?.slice(0, 10)?.forEach(row => {
                 const values = headers.map(h => {
                     const val = row[h];
                     if (val === null || val === undefined) return 'NULL';
@@ -133,24 +133,24 @@ export default function PlaygroundPage() {
 
             // insertStatements.push('COMMIT;');
             // on ui only showing max 10 rows for inserting other will be inserted in background
-            
+
 
             const batchSql = insertStatements.join('\n');
 
             // some check at last
-            const finalUISql = initialSql + '\n' + insertUiStatements + '\n' + 
+            const finalUISql = initialSql + '\n' + insertUiStatements + '\n' +
                 "-- Check the table info" + '\n' +
                 `SELECT name as column,type FROM pragma_table_info('${tableName}');` + '\n'
-                // + `SELECT * FROM ${tableName} limit 10;` + '\n'
+            // + `SELECT * FROM ${tableName} limit 10;` + '\n'
             setError(null);
             setResults(null);
 
-            const finalSql = initialSql + '\n' + batchSql + '\n' + 
+            const finalSql = initialSql + '\n' + batchSql + '\n' +
                 "-- Check the table info" + '\n' +
                 `SELECT name as column,type FROM pragma_table_info('${tableName}');` + '\n'
 
             setCode(finalSql);
-            
+
             // const { results, error } = await runPersistentQuery(batchSql);
 
             // if (error) {
@@ -170,7 +170,7 @@ export default function PlaygroundPage() {
         setResults(null);
         setError(null);
         try {
-            const {results: queryResults, error: queryError}  = await runPersistentQuery("SELECT name FROM sqlite_master WHERE type='table';");
+            const { results: queryResults, error: queryError } = await runPersistentQuery("SELECT name FROM sqlite_master WHERE type='table';");
             if (queryError) {
                 setError(queryError);
             } else {
@@ -190,15 +190,15 @@ export default function PlaygroundPage() {
     };
 
     return (
-        <div className="h-[calc(100vh-4rem)] flex flex-col bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans">
+        <div className="h-[calc(100vh-4rem)] flex flex-col bg-background text-foreground font-mono">
 
             {/* Main Content */}
             <div className="flex-1 overflow-hidden">
                 <PanelGroup direction="horizontal">
                     <Panel defaultSize={50} minSize={20}>
-                        <div className="h-full flex flex-col">
-                            <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-                                <div className="flex items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                        <div className="h-full flex flex-col border-r-[1.5px] border-border">
+                            <div className="flex items-center justify-between px-4 py-2 border-b-[1.5px] border-border bg-background">
+                                <div className="flex items-center gap-2 text-sm font-bold uppercase text-foreground">
                                     <Database size={16} />
                                     <span>SQL Editor</span>
                                 </div>
@@ -206,16 +206,18 @@ export default function PlaygroundPage() {
                                     <CsvUploader onDataUpload={handleDataUpload} />
                                 </div>
                             </div>
-                            <div className="flex-1 relative">
+                            <div className="flex-1 relative bg-background">
                                 <CodeEditor code={code} setCode={setCode} onRunQuery={handleRun} onSave={handleSave} status={isEngineReady ? "ready" : "loading"} />
                             </div>
                         </div>
                     </Panel>
 
-                    <PanelResizeHandle className="w-1 bg-zinc-200 dark:bg-zinc-800 hover:bg-blue-500 transition-colors" />
+                    <PanelResizeHandle className="w-[1.5px] bg-border hover:bg-foreground transition-colors cursor-col-resize flex items-center justify-center">
+                        <div className="h-8 w-1 bg-background"></div>
+                    </PanelResizeHandle>
 
                     <Panel defaultSize={50} minSize={20}>
-                        <div className="h-full overflow-hidden">
+                        <div className="h-full overflow-hidden bg-background">
 
                             <QueryResults results={results} error={error}
                                 children={
@@ -223,13 +225,13 @@ export default function PlaygroundPage() {
                                         <button
                                             onClick={handleGetTables}
                                             disabled={!isEngineReady || isRunning}
-                                            className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                            className="flex items-center gap-2 px-4 py-1.5 bg-background border-[1.5px] border-foreground hover:bg-muted text-foreground text-sm font-bold shadow-[2px_2px_0px_0px_currentColor] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
-                                            Show Tables 
+                                            Show Tables
                                         </button>
                                         <button
                                             onClick={handleReset}
-                                            className="p-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors"
+                                            className="p-1.5 text-foreground hover:bg-muted border-[1.5px] border-transparent hover:border-foreground transition-all active:translate-x-[1px] active:translate-y-[1px]"
                                             title="Reset Editor"
                                         >
                                             <RotateCcw size={18} />
@@ -237,16 +239,16 @@ export default function PlaygroundPage() {
                                         <button
                                             onClick={handleRun}
                                             disabled={!isEngineReady || isRunning}
-                                            className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                                            className="flex items-center gap-2 px-4 py-1.5 bg-foreground border-[1.5px] border-foreground hover:opacity-90 text-background text-sm font-bold shadow-[2px_2px_0px_0px_currentColor] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
-                                            <Play size={16} className={isRunning ? "animate-pulse" : ""} />
-                                            {isRunning ? 'Running...' : <>Run <span className='text-xs text-center border border-white p-0.5 rounded-10 flex flex-row justify-center items-center'>Ctrl+ <CornerDownLeft className='text-xs text-center w-4 h-4' /> </span></>}
+                                            <Play size={16} className={isRunning ? "animate-pulse fill-background" : "fill-background"} />
+                                            {isRunning ? 'Running...' : <>Run <span className='text-xs text-center border-[1.5px] border-background p-0.5 flex flex-row justify-center items-center bg-transparent gap-1'>Ctrl+ <CornerDownLeft className='text-xs text-center w-3 h-3' /> </span></>}
                                         </button>
                                     </div>
                                 }
                             />
                         </div>
-                        
+
                     </Panel>
                 </PanelGroup>
             </div>

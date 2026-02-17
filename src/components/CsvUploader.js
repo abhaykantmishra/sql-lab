@@ -48,10 +48,10 @@ const CsvUploader = ({ onDataUpload }) => {
     return (
         <div className="flex items-center gap-2">
             <label className={`
-        flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium cursor-pointer transition-colors
+        flex items-center gap-2 px-3 py-1.5 text-sm font-bold uppercase cursor-pointer transition-all border-[1.5px] shadow-[2px_2px_0px_0px_currentColor] active:shadow-none active:translate-x-[1px] active:translate-y-[1px]
         ${isUploading
-                    ? 'bg-zinc-100 text-zinc-400 cursor-not-allowed dark:bg-zinc-800 dark:text-zinc-500'
-                    : 'bg-zinc-100 hover:bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-zinc-300'}
+                    ? 'bg-muted text-muted-foreground border-border cursor-not-allowed'
+                    : 'bg-background text-foreground border-foreground hover:bg-muted'}
       `}>
                 {isUploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
                 <span>{isUploading ? 'Uploading...' : 'Upload CSV'}</span>
@@ -65,14 +65,14 @@ const CsvUploader = ({ onDataUpload }) => {
             </label>
 
             {error && (
-                <div className="text-red-500 text-xs flex items-center gap-1 animate-in fade-in slide-in-from-left-2">
+                <div className="text-destructive text-xs font-bold flex items-center gap-1 animate-in fade-in slide-in-from-left-2 uppercase">
                     <AlertCircle size={14} />
                     <span className="max-w-[200px] truncate" title={error}>{error}</span>
                 </div>
             )}
 
             {success && (
-                <div className="text-green-600 text-xs flex items-center gap-1 animate-in fade-in slide-in-from-left-2">
+                <div className="text-green-600 text-xs font-bold flex items-center gap-1 animate-in fade-in slide-in-from-left-2 uppercase">
                     <CheckCircle size={14} />
                     <span className="max-w-[200px] truncate" title={success}>{success}</span>
                 </div>

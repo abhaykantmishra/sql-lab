@@ -1,64 +1,74 @@
 import Link from 'next/link';
-import { Database, Code2, Trophy, ArrowRight } from 'lucide-react';
+import { Database, ShieldCheck, Zap, ArrowRight, Terminal, Cpu, Lock, Activity } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-full">
+    <div className="flex flex-col min-h-full bg-background text-foreground">
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col items-center justify-center px-4 py-20 bg-gradient-to-b from-white to-zinc-50 dark:from-zinc-900 dark:to-zinc-950 text-center">
-        <div className="max-w-3xl space-y-6">
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
-            Master SQL with <span className="text-blue-600 dark:text-blue-400">Real Practice</span>
+      <section className="flex-1 flex flex-col items-center justify-center px-4 py-24 text-center border-b-[1.5px] border-border">
+        <div className="max-w-4xl space-y-8">
+          <div className="inline-block px-4 py-1.5 border-[1.5px] border-border font-bold text-sm tracking-widest mb-4 bg-background text-foreground shadow-[2px_2px_0px_0px_currentColor]">
+            Privacy First • Serverless • Offline Capable
+          </div>
+          <h1 className="text-5xl md:text-7xl font-bold">
+            <span className="block my-4">Master SQL</span>
+            <span className="bg-foreground text-background px-4">Without The Server</span>
           </h1>
-          <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-            Interactive SQL playground, challenging problems, and instant feedback.
-            Level up your database skills from anywhere.
+          <p className="text-xl md:text-2xl max-w-2xl mx-auto font-medium leading-relaxed opacity-90">
+            A clean, privacy-focused SQL playground. <br />
+            No login. No tracking. Just code.
           </p>
-          <div className="flex items-center justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
             <Link
               href="/practice"
-              className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-blue-500/25 flex items-center gap-2"
+              className="btn-primary px-8 py-4 text-xl flex items-center gap-3"
             >
-              Start Practicing <ArrowRight size={20} />
+              <Terminal size={24} />
+              Start Practice
             </Link>
             <Link
               href="/playground"
-              className="px-8 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600 rounded-lg font-semibold text-lg transition-all"
+              className="px-8 py-4 bg-transparent text-foreground border-[1.5px] border-foreground font-bold text-xl shadow-[2px_2px_0px_0px_currentColor] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all flex items-center gap-3"
             >
-              Try Playground
+              Open Playground <ArrowRight size={24} />
             </Link>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
+      <section className="py-24 px-4 bg-background text-foreground">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-          <div className="p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100 dark:border-zinc-800">
-            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-4">
-              <Database className="text-blue-600 dark:text-blue-400" size={24} />
+          {/* Feature 1 */}
+          <div className="p-8 border-[1.5px] border-foreground hover:shadow-[4px_4px_0px_0px_currentColor] transition-all bg-background">
+            <div className="w-16 h-16 bg-foreground text-background flex items-center justify-center mb-6">
+              <Cpu size={32} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-zinc-900 dark:text-zinc-100">Interactive Environment</h3>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Run SQL queries directly in your browser with our persistent SQLite engine. No setup required.
+            <h3 className="text-2xl font-bold mb-4">Local Engine</h3>
+            <p className="text-lg font-medium opacity-80">
+              Powered by WASM. Your database lives in your browser's memory. Reset anytime. Zero latency.
             </p>
           </div>
-          <div className="p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100 dark:border-zinc-800">
-            <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center mb-4">
-              <Code2 className="text-green-600 dark:text-green-400" size={24} />
+
+          {/* Feature 2 */}
+          <div className="p-8 border-[1.5px] border-foreground hover:shadow-[4px_4px_0px_0px_currentColor] transition-all bg-background">
+            <div className="w-16 h-16 bg-foreground text-background flex items-center justify-center mb-6">
+              <Lock size={32} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-zinc-900 dark:text-zinc-100">Real-world Problems</h3>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Tackle a variety of SQL questions ranging from basic selects to complex joins and window functions.
+            <h3 className="text-2xl font-bold mb-4">100% Private</h3>
+            <p className="text-lg font-medium opacity-80">
+              No backend means no data leaks. Your queries and data never leave your device. Complete anonymity.
             </p>
           </div>
-          <div className="p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100 dark:border-zinc-800">
-            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center mb-4">
-              <Trophy className="text-purple-600 dark:text-purple-400" size={24} />
+
+          {/* Feature 3 */}
+          <div className="p-8 border-[1.5px] border-foreground hover:shadow-[4px_4px_0px_0px_currentColor] transition-all bg-background">
+            <div className="w-16 h-16 bg-foreground text-background flex items-center justify-center mb-6">
+              <Activity size={32} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-zinc-900 dark:text-zinc-100">Track Progress</h3>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Create an account to save your solutions, track your progress, and earn badges as you master SQL.
+            <h3 className="text-2xl font-bold mb-4 uppercase">Instant Feedback</h3>
+            <p className="text-lg font-medium opacity-80">
+              Battle-test your skills with real-time query execution against rigorous test cases.
             </p>
           </div>
         </div>

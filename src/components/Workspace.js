@@ -91,32 +91,32 @@ const Workspace = () => {
     }, []);
 
     return (
-        <div className="h-[calc(100vh-5rem)] my-1 w-full bg-zinc-950 flex flex-col overflow-hidden">
+        <div className="h-[calc(100vh-5rem)] my-1 w-full bg-background flex flex-col overflow-hidden">
             {/* Toolbar */}
-            <div className="h-8 border-b border-zinc-800 bg-zinc-900 flex items-center justify-between px-4 shrink-0">
+            <div className="h-10 border-b-[1.5px] border-border bg-background flex items-center justify-between px-4 shrink-0">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => setShowQuestionList(!showQuestionList)}
                         className={cn(
-                            "p-2 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 transition-colors",
-                            showQuestionList ? "bg-zinc-800 text-zinc-100" : ""
+                            "p-1.5 border-[1.5px] border-transparent hover:border-border hover:shadow-[2px_2px_0px_0px_currentColor] text-foreground transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none",
+                            showQuestionList ? "bg-muted border-border shadow-[2px_2px_0px_0px_currentColor]" : ""
                         )}
                         title="Toggle Question List"
                     >
-                        <List size={15} />
+                        <List size={18} />
                     </button>
                 </div>
                 <div className="flex items-center gap-2">
                     <button
                         onClick={handleRun}
-                        className="flex items-center gap-2 px-4 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-4 py-1.5 bg-background border-[1.5px] border-border hover:bg-muted text-foreground text-sm font-bold shadow-[2px_2px_0px_0px_currentColor] hover:shadow-[3px_3px_0px_0px_currentColor] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all"
                     >
-                        <Play size={16} className="fill-zinc-100" />
-                        {<>Run <span className='text-xs text-center border-[0.1px] border-zinc-500 p-0.5 rounded-10 hidden md:flex flex-row'> Ctrl+ <CornerDownLeft className='text-xs text-center w-4 h-4' /></span></>}
+                        <Play size={16} className="fill-foreground" />
+                        {<>Run <span className='text-xs text-center border-[1.5px] border-border p-0.5 hidden md:flex flex-row gap-1 items-center bg-muted'> Ctrl+ <CornerDownLeft className='text-xs text-center w-3 h-3' /></span></>}
                     </button>
                     <button
                         onClick={handleSubmit}
-                        className="flex items-center gap-2 px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded text-sm font-medium transition-colors"
+                        className="flex items-center gap-2 px-4 py-1.5 bg-foreground border-[1.5px] border-foreground hover:opacity-90 text-background text-sm font-bold shadow-[2px_2px_0px_0px_currentColor] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all"
                     >
                         <CheckCheck size={16} />
                         Submit
@@ -127,7 +127,7 @@ const Workspace = () => {
             {/* Main Content */}
             <div className="flex-1 overflow-hidden flex max-h-[calc(100vh-5rem)]">
                 {showQuestionList && (
-                    <div className="absolute lg:relative z-50 w-64 shrink-0 max-h-[calc(100vh-6rem)] h-full border-r border-zinc-800">
+                    <div className="absolute lg:relative z-50 w-72 shrink-0 max-h-[calc(100vh-6rem)] h-full border-r-[1.5px] border-border bg-background">
                         <QuestionList
                             questions={QUESTIONS}
                             currentQuestionId={currentQuestion?.id}
@@ -139,24 +139,28 @@ const Workspace = () => {
                 <div className="md:flex-1 h-full w-full overflow-hidden">
                     <PanelGroup direction={isMobile ? "vertical" : "horizontal"}>
                         {/* Left Panel: Problem Description */}
-                        <Panel defaultSize={40} minSize={20}>
+                        <Panel defaultSize={40} minSize={20} className="bg-background">
                             <ProblemDescription question={currentQuestion} />
                         </Panel>
 
-                        <PanelResizeHandle className="w-1.5 bg-zinc-900 hover:bg-zinc-700 transition-colors cursor-col-resize" />
+                        <PanelResizeHandle className="w-[1.5px] bg-border hover:bg-foreground transition-colors cursor-col-resize flex items-center justify-center">
+                            <div className="h-8 w-1 bg-background"></div>
+                        </PanelResizeHandle>
 
                         {/* Right Panel: Editor & Results */}
                         <Panel minSize={30}>
                             <PanelGroup direction="vertical">
                                 {/* Top: Code Editor */}
-                                <Panel defaultSize={60} minSize={20}>
+                                <Panel defaultSize={60} minSize={20} className="bg-[#1e1e1e] border-b-[1.5px] border-border">
                                     <CodeEditor code={code} setCode={setCode} onRunQuery={handleRun} />
                                 </Panel>
 
-                                <PanelResizeHandle className="h-1.5 bg-zinc-900 hover:bg-zinc-700 transition-colors cursor-row-resize" />
+                                <PanelResizeHandle className="h-[1.5px] bg-border hover:bg-foreground transition-colors cursor-row-resize flex items-center justify-center">
+                                    <div className="w-8 h-1 bg-background"></div>
+                                </PanelResizeHandle>
 
                                 {/* Bottom: Test Results */}
-                                <Panel minSize={20}>
+                                <Panel minSize={20} className="bg-background">
                                     <TestResults results={results} error={error} status={status} />
                                 </Panel>
                             </PanelGroup>

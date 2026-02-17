@@ -3,17 +3,17 @@ import { Terminal, CheckCircle2, AlertCircle, Check, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const ResultTable = ({ data }) => {
-    if (!data || data.length === 0) return <p className="text-zinc-500">No data returned.</p>;
+    if (!data || data.length === 0) return <p className="text-muted-foreground font-bold">No data.</p>;
 
     const columns = Object.keys(data[0]);
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto border-[1.5px] border-foreground shadow-[2px_2px_0px_0px_currentColor] bg-background">
             <table className="w-full text-left border-collapse">
                 <thead>
                     <tr>
                         {columns.map((col, i) => (
-                            <th key={i} className="p-2 border-b border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 font-semibold text-zinc-900 dark:text-zinc-100">
+                            <th key={i} className="p-2 border-b-[1.5px] border-foreground bg-foreground font-bold text-background uppercase text-xs tracking-wider">
                                 {col}
                             </th>
                         ))}
@@ -21,9 +21,9 @@ const ResultTable = ({ data }) => {
                 </thead>
                 <tbody>
                     {data.map((row, i) => (
-                        <tr key={i} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                        <tr key={i} className="hover:bg-foreground hover:text-background group transition-colors">
                             {columns.map((col, j) => (
-                                <td key={j} className="p-2 border-b border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 font-mono">
+                                <td key={j} className="p-2 border-b border-foreground/50 font-mono text-sm border-r border-foreground/50 last:border-r-0 border-dashed group-hover:border-background/50">
                                     {row[col]}
                                 </td>
                             ))}
@@ -31,7 +31,9 @@ const ResultTable = ({ data }) => {
                     ))}
                 </tbody>
             </table>
-            <p className="mt-4 text-xs text-zinc-500">{data.length} rows returned.</p>
+            <div className="p-2 border-t-[1.5px] border-foreground bg-background text-foreground text-xs font-mono font-bold text-right">
+                {data.length} ROWS
+            </div>
         </div>
     );
 };
@@ -55,15 +57,15 @@ const TestResults = ({ results, error, status }) => {
     const inputLabel = currentResult ? (currentResult.input || currentResult.testCaseInput || `Case ${activeCaseIndex + 1}`) : '';
 
     return (
-        <div className="h-full flex flex-col bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
-            <div className="flex items-center border-b border-zinc-200 dark:border-zinc-800 overflow-x-auto">
+        <div className="h-full flex flex-col bg-background border-t-[1.5px] border-border text-foreground font-mono">
+            <div className="flex items-center border-b-[1.5px] border-border overflow-x-auto bg-muted">
                 <button
                     onClick={() => setActiveTab('results')}
                     className={cn(
-                        "px-4 py-2 text-sm font-medium flex items-center gap-2 border-b-2 transition-colors shrink-0",
+                        "px-4 py-2 text-sm font-bold flex items-center gap-2 border-r-[1.5px] border-border transition-colors shrink-0 uppercase",
                         activeTab === 'results'
-                            ? "border-green-500 text-green-600 dark:text-green-400"
-                            : "border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+                            ? "bg-foreground text-background"
+                            : "bg-transparent text-foreground hover:bg-foreground/10"
                     )}
                 >
                     <CheckCircle2 size={16} />
@@ -72,10 +74,10 @@ const TestResults = ({ results, error, status }) => {
                 <button
                     onClick={() => setActiveTab('console')}
                     className={cn(
-                        "px-4 py-2 text-sm font-medium flex items-center gap-2 border-b-2 transition-colors shrink-0",
+                        "px-4 py-2 text-sm font-bold flex items-center gap-2 border-r-[1.5px] border-border transition-colors shrink-0 uppercase",
                         activeTab === 'console'
-                            ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                            : "border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+                            ? "bg-foreground text-background"
+                            : "bg-transparent text-foreground hover:bg-foreground/10"
                     )}
                 >
                     <Terminal size={16} />
@@ -83,21 +85,21 @@ const TestResults = ({ results, error, status }) => {
                 </button>
                 {status && (
                     <div className={cn(
-                        "ml-auto mr-4 px-3 py-1 rounded-full text-xs font-bold uppercase shrink-0",
-                        status === 'Passed' ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" :
-                            status === 'Failed' ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" :
-                                "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400"
+                        "ml-auto mr-4 px-3 py-1 border-[1.5px] border-foreground text-xs font-bold uppercase shrink-0 shadow-[2px_2px_0px_0px_currentColor]",
+                        status === 'Passed' ? "bg-green-500 text-white" :
+                            status === 'Failed' ? "bg-destructive text-white" :
+                                "bg-background text-foreground"
                     )}>
                         {status}
                     </div>
                 )}
             </div>
 
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col overflow-hidden bg-background">
                 {activeTab === 'results' ? (
                     <>
                         {isMultiCase && (
-                            <div className="flex border-b border-zinc-200 dark:border-zinc-800 overflow-x-auto bg-zinc-50 dark:bg-zinc-900/50">
+                            <div className="flex border-b-[1.5px] border-border overflow-x-auto bg-muted">
                                 {results.map((res, idx) => {
                                     const isPassed = res.passed === true;
                                     const isFailed = res.passed === false;
@@ -106,12 +108,12 @@ const TestResults = ({ results, error, status }) => {
                                             key={idx}
                                             onClick={() => setActiveCaseIndex(idx)}
                                             className={cn(
-                                                "px-4 py-2 text-xs font-medium border-r border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center gap-2 shrink-0",
-                                                activeCaseIndex === idx ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100" : "text-zinc-500 dark:text-zinc-500"
+                                                "px-4 py-2 text-xs font-bold border-r-[1.5px] border-border hover:bg-foreground/10 transition-colors flex items-center gap-2 shrink-0 uppercase",
+                                                activeCaseIndex === idx ? "bg-background text-foreground" : "text-muted-foreground"
                                             )}
                                         >
-                                            {isPassed && <Check size={12} className="text-green-500" />}
-                                            {isFailed && <X size={12} className="text-red-500" />}
+                                            {isPassed && <Check size={12} className="text-green-600" />}
+                                            {isFailed && <X size={12} className="text-destructive" />}
                                             {res.input || res.testCaseInput || `Case ${idx + 1}`}
                                         </button>
                                     );
@@ -121,19 +123,19 @@ const TestResults = ({ results, error, status }) => {
 
                         <div className="flex-1 p-4 overflow-auto">
                             {resultError ? (
-                                <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 flex items-start gap-3">
+                                <div className="p-4 bg-red-100 border-[1.5px] border-destructive text-destructive flex items-start gap-3 shadow-[2px_2px_0px_0px_currentColor]">
                                     <AlertCircle className="shrink-0 mt-0.5" size={18} />
                                     <div>
-                                        <p className="font-semibold">Error Execution</p>
-                                        <p className="font-mono mt-1">{resultError}</p>
+                                        <p className="font-bold uppercase">Error Execution</p>
+                                        <p className="font-mono mt-1 whitespace-pre-wrap">{resultError}</p>
                                     </div>
                                 </div>
                             ) : resultData ? (
-                                <div className="space-y-4">
+                                <div className="space-y-6">
                                     {resultStatus && (
                                         <div className={cn(
-                                            "inline-flex items-center gap-2 px-3 py-1 rounded-md text-sm font-medium",
-                                            resultStatus === 'Passed' ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                                            "inline-flex items-center gap-2 px-3 py-1 border-[1.5px] border-foreground text-sm font-bold shadow-[2px_2px_0px_0px_currentColor] uppercase",
+                                            resultStatus === 'Passed' ? "bg-green-500 text-white" : "bg-destructive text-white"
                                         )}>
                                             {resultStatus === 'Passed' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
                                             {resultStatus}
@@ -141,28 +143,29 @@ const TestResults = ({ results, error, status }) => {
                                     )}
 
                                     <div>
-                                        <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Your Output</h4>
+                                        <h4 className="text-sm font-bold text-foreground mb-2 uppercase border-b-[1.5px] border-foreground inline-block">Your Output</h4>
                                         <ResultTable data={resultData} />
                                     </div>
 
                                     {currentResult?.expectedResult && (
                                         <div>
-                                            <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-2">Expected Output</h4>
+                                            <h4 className="text-sm font-bold text-foreground mb-2 uppercase border-b-[1.5px] border-foreground inline-block">Expected Output</h4>
                                             <ResultTable data={currentResult.expectedResult} />
                                         </div>
                                     )}
                                 </div>
                             ) : (
-                                <div className="p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                                    <p className="font-medium text-zinc-900 dark:text-zinc-100 mb-2">Run your code to see results</p>
-                                    <p>The query results will appear here after execution.</p>
+                                <div className="p-4 bg-background border-[1.5px] border-foreground shadow-[2px_2px_0px_0px_currentColor]">
+                                    <p className="font-bold text-foreground mb-2 uppercase">Ready to Run</p>
+                                    <p className="text-sm opacity-80">Execute your query to see the results here.</p>
                                 </div>
                             )}
                         </div>
                     </>
                 ) : (
-                    <div className="p-4 font-mono text-sm text-zinc-600 dark:text-zinc-400">
-                        <p>$ Ready to execute SQL queries...</p>
+                    <div className="p-4 font-mono text-sm text-foreground">
+                        <p className="text-green-600 font-bold">$ System Ready...</p>
+                        <p className="opacity-70">Waiting for query execution...</p>
                     </div>
                 )}
             </div>

@@ -3,17 +3,17 @@ import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const ResultTable = ({ data }) => {
-    if (!data || data.length === 0) return <p className="text-zinc-500">No data returned.</p>;
+    if (!data || data.length === 0) return <p className="text-muted-foreground font-bold">No data returned.</p>;
 
     const columns = Object.keys(data[0]);
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto border-[1.5px] border-foreground shadow-[2px_2px_0px_0px_currentColor] bg-background">
             <table className="w-full text-left border-collapse">
                 <thead>
                     <tr>
                         {columns.map((col, i) => (
-                            <th key={i} className="p-2 border-b border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 font-semibold text-zinc-900 dark:text-zinc-100">
+                            <th key={i} className="p-2 border-b-[1.5px] border-foreground bg-foreground font-bold text-background uppercase text-xs tracking-wider">
                                 {col}
                             </th>
                         ))}
@@ -21,9 +21,9 @@ const ResultTable = ({ data }) => {
                 </thead>
                 <tbody>
                     {data.map((row, i) => (
-                        <tr key={i} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                        <tr key={i} className="hover:bg-foreground hover:text-background group transition-colors">
                             {columns.map((col, j) => (
-                                <td key={j} className="p-2 border-b border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 font-mono">
+                                <td key={j} className="p-2 border-b border-foreground/50 font-mono text-sm border-r border-foreground/50 last:border-r-0 border-dashed group-hover:border-background/50">
                                     {row[col]}
                                 </td>
                             ))}
@@ -31,27 +31,29 @@ const ResultTable = ({ data }) => {
                     ))}
                 </tbody>
             </table>
-            <p className="mt-4 text-xs text-zinc-500">{data.length} rows returned.</p>
+            <div className="p-2 border-t-[1.5px] border-foreground bg-background text-foreground text-xs font-mono font-bold text-right">
+                {data.length} ROWS
+            </div>
         </div>
     );
 };
 
 const QueryResults = ({ results, error, children }) => {
     return (
-        <div className="h-full flex flex-col bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
-            <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 px-4 py-2">
-                <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                    <CheckCircle2 size={16} className="text-blue-500" />
+        <div className="h-full flex flex-col bg-background border-t-[1.5px] border-border text-foreground font-mono">
+            <div className="flex items-center justify-between border-b-[1.5px] border-border bg-muted px-4 py-2">
+                <h3 className="text-sm font-bold text-foreground flex items-center gap-2 uppercase">
+                    <CheckCircle2 size={16} className="text-foreground" />
                     Query Results
                 </h3>
                 {children}
             </div>
-            <div className="flex-1 p-4 overflow-auto">
+            <div className="flex-1 p-4 overflow-auto bg-background">
                 {error ? (
-                    <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 flex items-start gap-3">
+                    <div className="p-4 bg-red-100 border-[1.5px] border-destructive text-destructive flex items-start gap-3 shadow-[2px_2px_0px_0px_currentColor]">
                         <AlertCircle className="shrink-0 mt-0.5" size={18} />
                         <div>
-                            <p className="font-semibold">Execution Error</p>
+                            <p className="font-bold uppercase">Execution Error</p>
                             <p className="font-mono mt-1">{error}</p>
                         </div>
                     </div>
@@ -62,9 +64,9 @@ const QueryResults = ({ results, error, children }) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p className="font-medium text-zinc-900 dark:text-zinc-100 mb-2">Ready to run</p>
-                        <p className="text-sm text-zinc-500">Execute a query to see results here.</p>
+                    <div className="p-4 bg-background border-[1.5px] border-foreground shadow-[2px_2px_0px_0px_currentColor]">
+                        <p className="font-bold text-foreground mb-2 uppercase">Ready to run</p>
+                        <p className="text-sm opacity-80">Execute a query to see results here.</p>
                     </div>
                 )}
             </div>
