@@ -107,7 +107,7 @@ const initWorker = () => {
 
   workerInitPromise = new Promise((resolve, reject) => {
     try {
-      console.log("Initializing SQL Worker...");
+      // console.log("Initializing SQL Worker...");
       worker = new Worker(new URL('./worker-sqlite.js', import.meta.url), { type: 'module' });
       const channel = new MessageChannel();
       workerPort = channel.port1;
@@ -116,7 +116,7 @@ const initWorker = () => {
       const handleInitMessage = (event) => {
         const data = event.data;
         if (data && data.status === 'ready') {
-          console.log("SQL Worker ready.");
+          // console.log("SQL Worker ready.");
           workerPort.removeEventListener('message', handleInitMessage);
           resolve();
         } else if (data && data.error) {
@@ -166,7 +166,7 @@ export const runPersistentQuery = async (query = "") => {
       };
 
       workerPort.addEventListener('message', handleMessage);
-      console.log("Sending query to worker:", query);
+      // console.log("Sending query to worker:", query);
       workerPort.postMessage(query);
     });
 

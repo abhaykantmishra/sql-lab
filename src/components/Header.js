@@ -1,29 +1,38 @@
 import Link from 'next/link';
-import { Database } from 'lucide-react';
+import { Database, HelpCircle } from 'lucide-react';
 
 const Header = () => {
     return (
-        <header className="h-16 border-b-[1.5px] border-border bg-background flex items-center px-6 justify-between sticky top-0 z-50">
-            <div className="flex items-center gap-2 md:gap-8">
-                <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <div className="bg-foreground text-background p-1 border-[1.5px] border-foreground">
-                        <Database size={24} />
+        <header className="h-16 border-b border-[var(--color-divider)] bg-[var(--color-bg-elevated)] flex items-center px-5 md:px-8 justify-between sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
+            <div className="flex items-center gap-3 md:gap-8">
+                <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+                    <div className="bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-accent-hover)] text-white p-1.5 rounded-lg">
+                        <Database size={22} strokeWidth={1.5} />
                     </div>
-                    <span className="font-bold text-xl tracking-tight text-foreground uppercase">Sql Labs</span>
+                    <span className="font-bold text-lg tracking-tight" style={{ color: 'var(--color-heading)' }}>SQL Labs</span>
                 </Link>
 
-                <nav className="flex items-center gap-3 md:gap-6">
-                    <Link href="/practice" className="text-sm font-bold text-foreground hover:bg-foreground hover:text-background px-2 py-1 transition-colors uppercase border-[1.5px] border-transparent hover:border-foreground">
+                <nav className="flex items-center gap-1 md:gap-2">
+                    <Link 
+                        href="/practice" 
+                        className="text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-heading)] hover:bg-[var(--color-divider)] px-3 py-2 rounded-lg transition-all"
+                    >
                         Practice
                     </Link>
-                    <Link href="/playground" className="text-sm font-bold text-foreground hover:bg-foreground hover:text-background px-2 py-1 transition-colors uppercase border-[1.5px] border-transparent hover:border-foreground">
+                    <Link 
+                        href="/playground" 
+                        className="text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-heading)] hover:bg-[var(--color-divider)] px-3 py-2 rounded-lg transition-all"
+                    >
                         Playground
                     </Link>
+                    <Link 
+                        href="/help" 
+                        className="text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-heading)] hover:bg-[var(--color-divider)] px-3 py-2 rounded-lg transition-all flex items-center gap-1.5"
+                    >
+                        <HelpCircle size={16} />
+                        <span className="hidden sm:inline">Help</span>
+                    </Link>
                 </nav>
-            </div>
-
-            <div className="flex items-center gap-2 md:gap-4">
-                {/* Auth links removed for no-backend version */}
             </div>
         </header>
     );

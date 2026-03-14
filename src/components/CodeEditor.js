@@ -26,25 +26,15 @@ const CodeEditor = ({ code, setCode, onRunQuery, onSave, status }) => {
         editor.addCommand(
             monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KeyK,
             () => {
-                console.log("Ctrl + Shift + K pressed inside Monaco!");
+                // console.log("Ctrl + Shift + K pressed inside Monaco!");
                 myCustomFunction();
             }
         );
 
-        // editor.addCommand(
-        //     monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyK,
-        //     () => {
-        //         console.log("Ctrl + K pressed inside editor!");
-        //         if (onRunQueryRef.current) {
-        //             onRunQueryRef.current();
-        //         }
-        //     }
-        // );
-
         editor.addCommand(
             monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
             () => {
-                console.log("Ctrl + Enter pressed inside editor!");
+                // console.log("Ctrl + Enter pressed inside editor!");
                 if (onRunQueryRef.current) {
                     onRunQueryRef.current();
                 }
@@ -54,7 +44,7 @@ const CodeEditor = ({ code, setCode, onRunQuery, onSave, status }) => {
         editor.addCommand(
             monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
             () => {
-                console.log("Ctrl + S pressed inside editor!");
+                // console.log("Ctrl + S pressed inside editor!");
                 if (onSaveRef.current) {
                     onSaveRef.current();
                 }
@@ -65,12 +55,19 @@ const CodeEditor = ({ code, setCode, onRunQuery, onSave, status }) => {
     const myCustomFunction = () => {
         alert("Shortcut triggered!");
     };
+    
+    // Determine editor theme based on color scheme
+    const getEditorTheme = () => {
+        if (typeof window === 'undefined') return 'vs-light';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'vs-dark' : 'vs-light';
+    };
+
     return (
         <div className="h-full w-full">
             <Editor
                 height="100%"
                 defaultLanguage="sql"
-                theme="vs-dark"
+                theme={getEditorTheme()}
                 value={code}
                 onChange={(value) => setCode(value)}
                 options={{

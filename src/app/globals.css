@@ -1,111 +1,377 @@
 @import "tailwindcss";
 
 :root {
-  /* High Contrast Yellow/Black Theme - Refined */
-  --background: #FFD700;
-  /* Gold/Yellow */
-  --foreground: #1a1a1a;
-  /* Soft Black */
-  --card: #FFD700;
-  /* Transparent/Yellow to avoid white patches */
-  --card-foreground: #1a1a1a;
-  --popover: #FFD700;
-  --popover-foreground: #1a1a1a;
-  --primary: #1a1a1a;
-  --primary-foreground: #FFD700;
-  --secondary: #1a1a1a;
-  --secondary-foreground: #ffffff;
-  --muted: #e5c100;
-  /* Darker yellow for muted areas */
-  --muted-foreground: #404040;
-  --accent: #1a1a1a;
-  --accent-foreground: #FFD700;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #1a1a1a;
-  --input: #1a1a1a;
-  --ring: #1a1a1a;
-  --radius: 0px;
+  --color-bg: #FAF9F7;
+  --color-bg-elevated: #FFFFFF;
+  --color-heading: #1E1E2E;
+  --color-text: #64748B;
+  --color-text-muted: #94A3B8;
+  --color-accent: #E86A58;
+  --color-accent-hover: #D45645;
+  --color-secondary: #5EADB0;
+  --color-secondary-hover: #4A9396;
+  --color-tertiary: #D4A853;
+  --color-divider: #E8E6E3;
+  --color-divider-dark: #D1CEC9;
+  --color-success: #22C55E;
+  --color-error: #EF4444;
+
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --background: var(--color-bg);
+  --foreground: var(--color-heading);
+  --card: var(--color-bg-elevated);
+  --card-foreground: var(--color-heading);
+  --popover: var(--color-bg-elevated);
+  --popover-foreground: var(--color-heading);
+  --primary: var(--color-heading);
+  --primary-foreground: var(--color-bg);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: #FFFFFF;
+  --muted: var(--color-divider);
+  --muted-foreground: var(--color-text);
+  --accent: var(--color-accent);
+  --accent-foreground: #FFFFFF;
+  --destructive: var(--color-error);
+  --destructive-foreground: #FFFFFF;
+  --border: var(--color-divider);
+  --input: var(--color-bg-elevated);
+  --ring: var(--color-accent);
+  --radius: 8px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-heading);
+  --color-card: var(--color-bg-elevated);
+  --color-card-foreground: var(--color-heading);
+  --color-popover: var(--color-bg-elevated);
+  --color-popover-foreground: var(--color-heading);
+  --color-primary: var(--color-heading);
+  --color-primary-foreground: var(--color-bg);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: #FFFFFF;
+  --color-muted: var(--color-divider);
+  --color-muted-foreground: var(--color-text);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: #FFFFFF;
+  --color-destructive: var(--color-error);
+  --color-destructive-foreground: #FFFFFF;
+  --color-border: var(--color-divider);
+  --color-input: var(--color-bg-elevated);
+  --color-ring: var(--color-accent);
   --radius: var(--radius);
-  --font-sans: var(--font-space-mono);
-  --font-mono: var(--font-space-mono);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Inverted for Dark Mode but keeping identity */
-    --background: #1a1a1a;
-    --foreground: #FFD700;
-    --card: #1a1a1a;
-    --card-foreground: #FFD700;
-    --popover: #1a1a1a;
-    --popover-foreground: #FFD700;
-    --primary: #FFD700;
-    --primary-foreground: #1a1a1a;
-    --secondary: #FFD700;
-    --secondary-foreground: #1a1a1a;
-    --muted: #262626;
-    --muted-foreground: #a3a3a3;
-    --accent: #FFD700;
-    --accent-foreground: #1a1a1a;
-    --border: #FFD700;
-    --input: #FFD700;
-    --ring: #FFD700;
+    --color-bg: #121218;
+    --color-bg-elevated: #1A1A24;
+    --color-heading: #F5F5F7;
+    --color-text: #9CA3AF;
+    --color-text-muted: #6B7280;
+    --color-accent: #E86A58;
+    --color-accent-hover: #F07B68;
+    --color-secondary: #5EADB0;
+    --color-secondary-hover: #6FC0C4;
+    --color-tertiary: #D4A853;
+    --color-divider: #2A2A35;
+    --color-divider-dark: #3A3A48;
+    
+    --background: var(--color-bg);
+    --foreground: var(--color-heading);
+    --card: var(--color-bg-elevated);
+    --card-foreground: var(--color-heading);
+    --popover: var(--color-bg-elevated);
+    --popover-foreground: var(--color-heading);
+    --primary: var(--color-heading);
+    --primary-foreground: var(--color-bg);
+    --secondary: var(--color-secondary);
+    --secondary-foreground: #FFFFFF;
+    --muted: var(--color-divider);
+    --muted-foreground: var(--color-text);
+    --accent: var(--color-accent);
+    --accent-foreground: #FFFFFF;
+    --destructive: var(--color-error);
+    --destructive-foreground: #FFFFFF;
+    --border: var(--color-divider);
+    --input: var(--color-bg-elevated);
+    --ring: var(--color-accent);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-mono);
-}
-
 * {
-  border-radius: 0 !important;
+  border-color: var(--color-divider) !important;
 }
 
-/* Cleaner Component Styles */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1rem; 
+  font-family: var(--font-heading);
+  color: var(--color-heading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 { 
+  font-size: 1.75rem; 
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--color-secondary);
+}
+
+h2 { 
+  font-size: 1.275rem; 
+  font-weight: 600;
+  color: var(--color-tertiary);
+}
+
+h3 { 
+  font-size: 1.01rem; 
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Smooth Transitions */
+.transition-smooth {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Button Styles */
 .btn-primary {
-  background-color: var(--primary);
-  color: var(--primary-foreground);
-  border: 1.5px solid var(--border);
-  font-weight: bold;
-  box-shadow: 2px 2px 0px 0px var(--foreground);
-  /* Reduced shadow */
-  transition: all 0.1s ease-in-out;
+  background-color: var(--color-heading);
+  color: var(--color-bg);
+  border: 2px solid var(--color-heading);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: var(--radius);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(232, 106, 88, 0.25);
 }
 
 .btn-primary:active {
-  box-shadow: 0px 0px 0px 0px var(--foreground);
-  transform: translate(2px, 2px);
+  transform: translateY(0);
+  box-shadow: none;
 }
 
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: #FFFFFF;
+  border: 2px solid var(--color-secondary);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: var(--radius);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
+  border-color: var(--color-secondary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(94, 173, 176, 0.25);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-heading);
+  border: 2px solid var(--color-heading);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border-radius: var(--radius);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-heading);
+  color: var(--color-bg);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 30, 46, 0.15);
+}
+
+/* Card Styles */
 .card {
-  border: 1.5px solid var(--border);
-  box-shadow: 2px 2px 0px 0px var(--foreground);
-  /* Reduced shadow */
-  background-color: var(--card);
-  color: var(--card-foreground);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-heading);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  border-color: var(--color-divider-dark);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Feature Card */
+.feature-card {
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 12px 32px rgba(232, 106, 88, 0.1);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  color: white;
+  margin-bottom: 1.25rem;
+}
+
+.feature-card:nth-child(2) .feature-icon {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-hover) 100%);
+}
+
+.feature-card:nth-child(3) .feature-icon {
+  background: linear-gradient(135deg, var(--color-tertiary) 0%, #C49943 100%);
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(232, 106, 88, 0.04) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(94, 173, 176, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 9999px;
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-divider);
+  color: var(--color-text);
+}
+
+/* Link hover effect */
+.link-hover {
+  position: relative;
+}
+
+.link-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  transition: width 0.2s ease;
+}
+
+.link-hover:hover::after {
+  width: 100%;
+}
+
+/* Code styling */
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-divider-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Focus ring */
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(232, 106, 88, 0.3);
+}
+
+/* Status indicators */
+.status-passed {
+  color: var(--color-success);
+}
+
+.status-failed {
+  color: var(--color-error);
+}
+
+/* Difficulty badges */
+.difficulty-easy {
+  color: #22C55E;
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.difficulty-medium {
+  color: #F59E0B;
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+.difficulty-hard {
+  color: #EF4444;
+  background-color: rgba(239, 68, 68, 0.1);
 }

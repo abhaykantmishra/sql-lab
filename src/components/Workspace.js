@@ -8,7 +8,7 @@ import QuestionList from './QuestionList';
 import { Play, CheckCheck, List, CornerDownLeft } from 'lucide-react';
 import { getQuestionById } from '@/lib/questionLoader';
 import { QUESTIONS } from '@/questions-bank/questions-list';
-import { runQuery, checkSolution } from '@/lib/sqlEngine';
+import { checkSolution } from '@/lib/sqlEngine';
 import { cn } from '@/lib/utils';
 
 const Workspace = () => {
@@ -16,7 +16,7 @@ const Workspace = () => {
     const [code, setCode] = useState("-- Write your SQL query here\nSELECT * FROM users;");
     const [results, setResults] = useState(null);
     const [error, setError] = useState(null);
-    const [status, setStatus] = useState(null); // 'Passed' | 'Failed' | null
+    const [status, setStatus] = useState(null);
     const [showQuestionList, setShowQuestionList] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
 
@@ -32,7 +32,7 @@ const Workspace = () => {
     }, []);
 
     const handleRun = async () => {
-        console.log("run");
+        // console.log("run");
         setStatus('Running...');
 
         const { passed, results, error } = await checkSolution(
@@ -52,7 +52,7 @@ const Workspace = () => {
     };
 
     const handleSubmit = async () => {
-        console.log("submit")
+        // console.log("submit")
         setStatus('Running...');
         const { passed, results, error } = await checkSolution(
             currentQuestion.testCases,
@@ -65,7 +65,6 @@ const Workspace = () => {
             setStatus('Failed');
         } else {
             setError(null);
-            // Pass all results to TestResults
             setResults(results);
             setStatus(passed ? 'Passed' : 'Failed');
         }
@@ -86,20 +85,19 @@ const Workspace = () => {
 
     useEffect(() => {
         const question = getQuestionById(1);
-        // console.log(question)
         setCurrentQuestion(question);
     }, []);
 
     return (
-        <div className="h-[calc(100vh-5rem)] my-1 w-full bg-background flex flex-col overflow-hidden">
+        <div className="h-[calc(100vh-4rem)] my-1 w-full bg-[var(--color-bg)] flex flex-col overflow-hidden">
             {/* Toolbar */}
-            <div className="h-10 border-b-[1.5px] border-border bg-background flex items-center justify-between px-4 shrink-0">
-                <div className="flex items-center gap-4">
+            <div className="h-12 border-b border-[var(--color-divider)] bg-[var(--color-bg-elevated)] flex items-center justify-between px-4 shrink-0">
+                <div className="flex items-center gap-3">
                     <button
                         onClick={() => setShowQuestionList(!showQuestionList)}
                         className={cn(
-                            "p-1.5 border-[1.5px] border-transparent hover:border-border hover:shadow-[2px_2px_0px_0px_currentColor] text-foreground transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-none",
-                            showQuestionList ? "bg-muted border-border shadow-[2px_2px_0px_0px_currentColor]" : ""
+                            "p-2 rounded-lg border border-[var(--color-divider)] text-[var(--color-text)] hover:text-[var(--color-heading)] hover:border-[var(--color-divider-dark)] transition-all",
+                            showQuestionList ? "bg-[var(--color-bg)] text-[var(--color-heading)]" : ""
                         )}
                         title="Toggle Question List"
                     >
@@ -109,14 +107,14 @@ const Workspace = () => {
                 <div className="flex items-center gap-2">
                     <button
                         onClick={handleRun}
-                        className="flex items-center gap-2 px-4 py-1.5 bg-background border-[1.5px] border-border hover:bg-muted text-foreground text-sm font-bold shadow-[2px_2px_0px_0px_currentColor] hover:shadow-[3px_3px_0px_0px_currentColor] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all"
+                        className="flex items-center gap-2 px-4 py-2 bg-[var(--color-bg-elevated)] border border-[var(--color-divider)] hover:bg-[var(--color-bg)] hover:border-[var(--color-divider-dark)] text-[var(--color-heading)] text-sm font-semibold rounded-lg transition-all"
                     >
-                        <Play size={16} className="fill-foreground" />
-                        {<>Run <span className='text-xs text-center border-[1.5px] border-border p-0.5 hidden md:flex flex-row gap-1 items-center bg-muted'> Ctrl+ <CornerDownLeft className='text-xs text-center w-3 h-3' /></span></>}
+                        <Play size={16} className="fill-[var(--color-heading)]" />
+                        <span>Run</span>
                     </button>
                     <button
                         onClick={handleSubmit}
-                        className="flex items-center gap-2 px-4 py-1.5 bg-foreground border-[1.5px] border-foreground hover:opacity-90 text-background text-sm font-bold shadow-[2px_2px_0px_0px_currentColor] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all"
+                        className="flex items-center gap-2 px-4 py-2 bg-[var(--color-heading)] text-[var(--color-bg)] border border-[var(--color-heading)] text-sm font-semibold rounded-lg hover:opacity-90 transition-all"
                     >
                         <CheckCheck size={16} />
                         Submit
@@ -125,9 +123,9 @@ const Workspace = () => {
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 overflow-hidden flex max-h-[calc(100vh-5rem)]">
+            <div className="flex-1 overflow-hidden flex max-h-[calc(100vh-4rem)]">
                 {showQuestionList && (
-                    <div className="absolute lg:relative z-50 w-72 shrink-0 max-h-[calc(100vh-6rem)] h-full border-r-[1.5px] border-border bg-background">
+                    <div className="absolute lg:relative z-50 w-72 shrink-0 max-h-[calc(100vh-5rem)] h-full border-r border-[var(--color-divider)] bg-[var(--color-bg-elevated)]">
                         <QuestionList
                             questions={QUESTIONS}
                             currentQuestionId={currentQuestion?.id}
@@ -139,28 +137,24 @@ const Workspace = () => {
                 <div className="md:flex-1 h-full w-full overflow-hidden">
                     <PanelGroup direction={isMobile ? "vertical" : "horizontal"}>
                         {/* Left Panel: Problem Description */}
-                        <Panel defaultSize={40} minSize={20} className="bg-background">
+                        <Panel defaultSize={40} minSize={20} className="bg-[var(--color-bg-elevated)]">
                             <ProblemDescription question={currentQuestion} />
                         </Panel>
 
-                        <PanelResizeHandle className="w-[1.5px] bg-border hover:bg-foreground transition-colors cursor-col-resize flex items-center justify-center">
-                            <div className="h-8 w-1 bg-background"></div>
-                        </PanelResizeHandle>
+                        <PanelResizeHandle className="w-1 bg-[var(--color-divider)] hover:bg-[var(--color-accent)] transition-colors cursor-col-resize flex items-center justify-center" />
 
                         {/* Right Panel: Editor & Results */}
                         <Panel minSize={30}>
                             <PanelGroup direction="vertical">
                                 {/* Top: Code Editor */}
-                                <Panel defaultSize={60} minSize={20} className="bg-[#1e1e1e] border-b-[1.5px] border-border">
+                                <Panel defaultSize={60} minSize={20} className="bg-[#1E1E2E] border-b border-[var(--color-divider)]">
                                     <CodeEditor code={code} setCode={setCode} onRunQuery={handleRun} />
                                 </Panel>
 
-                                <PanelResizeHandle className="h-[1.5px] bg-border hover:bg-foreground transition-colors cursor-row-resize flex items-center justify-center">
-                                    <div className="w-8 h-1 bg-background"></div>
-                                </PanelResizeHandle>
+                                <PanelResizeHandle className="h-1 bg-[var(--color-divider)] hover:bg-[var(--color-accent)] transition-colors cursor-row-resize flex items-center justify-center" />
 
                                 {/* Bottom: Test Results */}
-                                <Panel minSize={20} className="bg-background">
+                                <Panel minSize={20} className="bg-[var(--color-bg-elevated)]">
                                     <TestResults results={results} error={error} status={status} />
                                 </Panel>
                             </PanelGroup>

@@ -17,11 +17,11 @@ Promise.resolve().then(async () => {
     });
 
     // Initialize SQLite.
-    console.log('Worker origin:', self.location.origin);
+    // console.log('Worker origin:', self.location.origin);
     const module = await SQLiteESMFactory({
       locateFile: (file) => {
         const url = new URL('/wa-sqlite-async.wasm', self.location.origin).href;
-        console.log('WASM URL:', url);
+        // console.log('WASM URL:', url);
         return url;
       }
     });
@@ -38,7 +38,7 @@ Promise.resolve().then(async () => {
     // Handle SQL from the main thread.
     messagePort.addEventListener('message', async event => {
       const sql = event.data;
-      console.log("Worker received query:", sql);
+      // console.log("Worker received query:", sql);
       try {
         // Query the database.
         const results = [];
@@ -51,7 +51,7 @@ Promise.resolve().then(async () => {
         });
 
         // Return the results.
-        console.log("Worker sending results");
+        // console.log("Worker sending results");
         messagePort.postMessage(results);
       } catch (error) {
         console.error("Worker query error:", error);
@@ -61,7 +61,7 @@ Promise.resolve().then(async () => {
     messagePort.start();
 
     // Signal ready
-    console.log("Worker sending ready signal");
+    // console.log("Worker sending ready signal");
     messagePort.postMessage({ status: 'ready' });
 
   } catch (error) {
